@@ -1,0 +1,3 @@
+* Dot files
+
+used misterio77 templates to set up this flake repo
