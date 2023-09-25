@@ -139,7 +139,7 @@
   system.stateVersion = "23.05";
 
   environment.systemPackages = with pkgs; [
-    vim git waybar dunst libnotify swww kitty rofi-wayland just cliphist home-manager
+    vim git waybar dunst libnotify swww kitty rofi-wayland just cliphist home-manager firefox
   ];
 
   programs.hyprland = {
