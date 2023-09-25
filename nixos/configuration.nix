@@ -66,41 +66,83 @@
     };
   };
 
+
   # FIXME: Add the rest of your current configuration
 
-  # TODO: Set your hostname
-  networking.hostName = "your-hostname";
+  # Set your hostname
+  networking.hostName = "nixos";
 
-  # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  boot.loader.systemd-boot.enable = true;
+  # This is just an example, be sure to use whatever bootloader you prefer
+  # boot.loader.systemd-boot.enable = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
+  # Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
     # FIXME: Replace with your username
-    your-username = {
-      # TODO: You can set an initial password for your user.
+    malcolm = {
+      #  You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "correcthorsebatterystaple";
+      initialPassword = "pass";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = ["wheel"];
+      description = "Malcolm Kahora";
+      openssh.authorizedKeys.keys = ["AAAAB3NzaC1yc2EAAAADAQABAAABgQC+8ML9DGcfSBXYIdrr5GvkFNGhF9Ha7igM2R3CpLUB+wx+sSJmHJYsTFIMOpWI9f+WNm8ZjSdo+6IfL2E/sWlxP9oCC5rZAdTat1eS0CIIAkfA83Z+tn8BVPcW2dr0pn1F1ddL0h+FDRMTexB9MK7QodcTRlN7U1z10xLBy1LK5IMh3hnOn7uC/q8lUeama0ApPoCjFonwepCzkGFQ9GUdetmlyPe/uzk76xHETTrfayh3cbA5DlGjvdlOq7C1137f2apLxZky4ux/Dy8H0GtmfJZB0fp3qoedsJbJz+/x3i8ZTjKCiId65Irb9tcCLayz3kh5Ts/ohkmoKr7VdkDTIHwkpa4fc+S3ulEjipAU5xlYFO67obuWWgXGrOTmxLRf4Rbeij6k7w7GbbkL41rTIPMGNT8IwcVdwYJ9TJwduSiESUH+a0mLz8U+SxJvXT4ZQO9gqsO2TzGEMNKYvzBYP7FcKHNI4Y0iRS3mksId48KxtkPVc+ySk5YdFyqf1zc="];
+        # Add your SSH public key(s) here, if you plan on using SSH to connect
+      #  Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
+      extraGroups = ["wheel networkmanager docker audio"];
     };
   };
+
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
   services.openssh = {
     enable = true;
     # Forbid root login through SSH.
-    permitRootLogin = "no";
+    settings = {
+      PermitRootLogin = "yes" ;
+      PasswordAuthentication = true;
+    };
     # Use keys only. Remove if you want to SSH using password (not recommended)
-    passwordAuthentication = false;
   };
+
+  networking = {
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [22];
+    };
+  };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+ };
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+  # fonts.packages = with pkgs; [
+  #   (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "DroidSansMono" ]; })
+  # ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
+
+  environment.systemPackages = with pkgs; [
+    vim git waybar dunst libnotify swww kitty rofi-wayland just cliphist home-manager
+  ];
+
+  programs.hyprland = {
+    enable = true;
+  };
 }
