@@ -1,8 +1,43 @@
 {config, pkgs, ...}:
+let
+  
+  start = pkgs.writeShellApplication {
+    name = "start";
+    runtimeInputs = [pkgs.waybar pkgs.dunst];
+    text = ''
+    waybar &
+    nm-applet --indicator &
+    dunst &
+    '';
+  };
+
+  toggle-gaps =  pkgs.writeShellApplication {
+    name = "toggle-gaps";
+    runtimeInputs = [pkgs.cowsay];
+    text = ''
+
+TOGGLE=$HOME/.toggle
+
+if [ ! -e "$TOGGLE" ]; then
+	touch "$TOGGLE"
+	hyprctl keyword general:gaps_in 0
+	hyprctl keyword general:gaps_out 0
+	hyprctl keyword decoration:rounding 0
+else
+	rm "$TOGGLE"
+	hyprctl keyword general:gaps_in 10
+	hyprctl keyword general:gaps_out 20
+	hyprctl keyword decoration:rounding 15
+fi
+    '';
+};
+in
 {
 
   home.packages = with pkgs; [
     wayland
+
+    toggle-gaps 
   ];
 
   wayland.windowManager.hyprland = {
@@ -33,7 +68,7 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-exec-once = bash /home/malcolm/.config/hypr/start.sh
+exec-once = bash /home/malcolm/.config/hypr/${start}/bin/start
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
@@ -233,7 +268,7 @@ bindm = $mainMod, mouse:273, resizewindow
 bind = $mainMod, ;, movetoworkspace, special
 
 # Special scripts
-bind = $mainMod, H, exec, sh .config/hypr/scripts/toggle-gaps.sh
+bind = $mainMod, H, exec, sh ${toggle-gaps}/bin/toggle-gaps
 '';
   };
       home.file.".config/hypr/colors".text = ''

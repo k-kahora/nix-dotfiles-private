@@ -42,9 +42,13 @@
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    # (pkgs.writeShellApplication {
+    #   name = "show-nix-os.org";
+    #   runtimeInputs = [curl w3m cowsay];
+    #   text = ''
+    #   curl -s 'https://nixos.org' | w3m -dump -T text/html | cowsay
+    #   '';
+    #  })
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

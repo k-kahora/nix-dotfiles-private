@@ -1,11 +1,16 @@
 {pkgs, config, ...}:
 {
-  pkgs.writeShellApplication {
+  home.packages = with pkgs;[
+  
+  (writeShellApplication {
 
-    name = "show-nix-os.org"
-    runTimeInputs = [curl w3m ];
+    name = "show-nix-os.org";
+    runtimeInputs = [curl w3m cowsay];
     text = ''
-    curl -s 'http://nixos.org' | w3m -dump -T text/htmy
+    curl -s 'https://nixos.org' | w3m -dump -T text/html
     '';
-  };
+  })
+
+
+  ];
 }
