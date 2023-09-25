@@ -7,6 +7,9 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
+    emacs-unstable = import builtins.fetchTarball {
+      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+    };
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
