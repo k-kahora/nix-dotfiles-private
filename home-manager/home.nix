@@ -28,7 +28,7 @@
   ];
 
   home.packages = with pkgs;[
-    direnv nix-direnv
+    direnv nix-direnv rofi-emoji
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

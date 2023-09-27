@@ -12,6 +12,10 @@
         "direnv"
       ];
     };
+    shellAliases = {
+      ll = "ls -l";
+      ".." = "cd ..";
+    };
     envExtra = ''
     export ZSHVAR="Hello Person"
     '';
