@@ -18,17 +18,17 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
-    ./starship.nix
+    # ./starship.nix
     ./hypr.nix
     ./zsh.nix
     ./kitty.nix
-    ./rofi.nix
+    #./rofi.nix
     ./git.nix
     ./scripts.nix
   ];
 
   home.packages = with pkgs;[
-    direnv nix-direnv rofi-emoji
+    rofi-emoji
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -106,6 +106,10 @@
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  programs.direnv = {
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

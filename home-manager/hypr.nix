@@ -1,7 +1,7 @@
 {config, pkgs, ...}:
 let
   
-  start = pkgs.writeShellApplication {
+  mk-start = pkgs.writeShellApplication {
     name = "start";
     runtimeInputs = [pkgs.waybar pkgs.dunst];
     text = ''
@@ -11,7 +11,7 @@ let
     '';
   };
 
-  toggle-gaps =  pkgs.writeShellApplication {
+  mk-toggle-gaps =  pkgs.writeShellApplication {
     name = "toggle-gaps";
     runtimeInputs = [pkgs.cowsay];
     text = ''
@@ -36,8 +36,8 @@ in
 
   home.packages = with pkgs; [
     wayland
-
-    toggle-gaps 
+    grim
+    slurp
   ];
 
   wayland.windowManager.hyprland = {
@@ -68,7 +68,7 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-exec-once = bash /home/malcolm/.config/hypr/${start}/bin/start
+exec-once = bash ${mk-start}/bin/start
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
@@ -137,6 +137,8 @@ decoration {
 
     blur {
         enabled = true
+    mk-start 
+    mk-toggle-gaps 
         size = 5
         passes = 1
         new_optimizations = true
@@ -215,6 +217,7 @@ $mainMod = SUPER
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, Q, exec, kitty
+bind = $mainMod, D, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)"
 bind = $mainMod, C, killactive, 
 bind = $mainMod, M, exit, 
 bind = $mainMod, E, exec, dolphin
@@ -265,10 +268,10 @@ bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
 
 # TODO Special workspace
-bind = $mainMod, ;, movetoworkspace, special
+# bind = $mainMod, ;, movetoworkspace, special,
 
 # Special scripts
-bind = $mainMod, H, exec, sh ${toggle-gaps}/bin/toggle-gaps
+bind = $mainMod, H, exec, bash ${mk-toggle-gaps}/bin/toggle-gaps,
 '';
   };
       home.file.".config/hypr/colors".text = ''
