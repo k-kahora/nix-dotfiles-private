@@ -38,6 +38,7 @@ in
     wayland
     grim
     slurp
+    swappy
   ];
 
   wayland.windowManager.hyprland = {
@@ -217,7 +218,8 @@ $mainMod = SUPER
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, Q, exec, kitty
-bind = $mainMod, D, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)"
+# Passes the selected screen into standard output and pipes it to swappy
+bind = $mainMod, D, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -
 bind = $mainMod, C, killactive, 
 bind = $mainMod, M, exit, 
 bind = $mainMod, E, exec, dolphin
