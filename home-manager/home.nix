@@ -25,6 +25,7 @@
     #./rofi.nix
     ./git.nix
     ./scripts.nix
+    ./eww.nix
   ];
 
   home.packages = with pkgs;[
