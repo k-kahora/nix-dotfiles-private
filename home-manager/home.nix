@@ -26,6 +26,7 @@
     ./git.nix
     ./scripts.nix
     ./eww.nix
+    ./lf.nix
   ];
 
   home.packages = with pkgs;[
