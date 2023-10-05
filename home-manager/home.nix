@@ -25,7 +25,7 @@
     #./rofi.nix
     ./git.nix
     ./scripts.nix
-    ./eww.nix
+    #./eww.nix
     ./lf.nix
   ];
 

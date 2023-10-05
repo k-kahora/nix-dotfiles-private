@@ -70,6 +70,7 @@ monitor=,preferred,auto,auto
 
 # Execute your favorite apps at launch
 exec-once = bash ${mk-start}/bin/start
+exec-once = wl-paste --type text --watch cliphist store
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
@@ -225,6 +226,7 @@ bind = $mainMod, M, exit,
 bind = $mainMod, E, exec, dolphin
 bind = $mainMod, SPACE, togglefloating, 
 bind = $mainMod, R, exec, rofi -show drun -show-icons
+bind = $mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, J, togglesplit, # dwindle
 

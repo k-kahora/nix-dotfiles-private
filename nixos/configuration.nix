@@ -1,148 +1,198 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
+
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, inputs, ... }:
+
 {
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
-  # You can import other NixOS modules here
-  imports = [
-    # If you want to use modules your own flake exports (from modules/nixos):
-    # outputs.nixosModules.example
-
-    # Or modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
-    ./hardware-configuration.nix
-  ];
-
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
     ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
-  };
-
-  nix = {
-    # This will add each flake input as a registry
-    # To make nix3 commands consistent with your flake
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
-
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-
-    settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Deduplicate and optimize nix store
-      auto-optimise-store = true;
-    };
-  };
 
 
-  # FIXME: Add the rest of your current configuration
-
-  # Set your hostname
-  networking.hostName = "nixos";
-
-  # This is just an example, be sure to use whatever bootloader you prefer
-  # boot.loader.systemd-boot.enable = true;
+  # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  # Configure your system-wide user settings (groups, etc), add more users as needed.
-  users.users = {
-    # FIXME: Replace with your username
-    malcolm = {
-      #  You can set an initial password for your user.
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "pass";
-      isNormalUser = true;
-      description = "Malcolm Kahora";
-      openssh.authorizedKeys.keys = ["AAAAB3NzaC1yc2EAAAADAQABAAABgQC+8ML9DGcfSBXYIdrr5GvkFNGhF9Ha7igM2R3CpLUB+wx+sSJmHJYsTFIMOpWI9f+WNm8ZjSdo+6IfL2E/sWlxP9oCC5rZAdTat1eS0CIIAkfA83Z+tn8BVPcW2dr0pn1F1ddL0h+FDRMTexB9MK7QodcTRlN7U1z10xLBy1LK5IMh3hnOn7uC/q8lUeama0ApPoCjFonwepCzkGFQ9GUdetmlyPe/uzk76xHETTrfayh3cbA5DlGjvdlOq7C1137f2apLxZky4ux/Dy8H0GtmfJZB0fp3qoedsJbJz+/x3i8ZTjKCiId65Irb9tcCLayz3kh5Ts/ohkmoKr7VdkDTIHwkpa4fc+S3ulEjipAU5xlYFO67obuWWgXGrOTmxLRf4Rbeij6k7w7GbbkL41rTIPMGNT8IwcVdwYJ9TJwduSiESUH+a0mLz8U+SxJvXT4ZQO9gqsO2TzGEMNKYvzBYP7FcKHNI4Y0iRS3mksId48KxtkPVc+ySk5YdFyqf1zc="];
-        # Add your SSH public key(s) here, if you plan on using SSH to connect
-      #  Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = ["wheel networkmanager docker audio"];
-    };
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "America/New_York";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
   };
 
+  # Enable the X11 windowing system.
   services.xserver.enable = true;
+
+  # Enable the Pantheon Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
-  services.openssh = {
+  # Configure keymap in X11
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "";
+  };
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound with pipewire.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
     enable = true;
-    # Forbid root login through SSH.
-    settings = {
-      PermitRootLogin = "yes" ;
-      PasswordAuthentication = true;
-    };
-    # Use keys only. Remove if you want to SSH using password (not recommended)
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
   };
 
-  networking = {
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [22];
-    };
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.malcolm = {
+    isNormalUser = true;
+    description = "Malcolm Kahora";
+    extraGroups = [ "networkmanager" "wheel" ];
+    openssh.authorizedKeys.keys = ["AAAAB3NzaC1yc2EAAAADAQABAAABgQC+8ML9DGcfSBXYIdrr5GvkFNGhF9Ha7igM2R3CpLUB+wx+sSJmHJYsTFIMOpWI9f+WNm8ZjSdo+6IfL2E/sWlxP9oCC5rZAdTat1eS0CIIAkfA83Z+tn8BVPcW2dr0pn1F1ddL0h+FDRMTexB9MK7QodcTRlN7U1z10xLBy1LK5IMh3hnOn7uC/q8lUeama0ApPoCjFonwepCzkGFQ9GUdetmlyPe/uzk76xHETTrfayh3cbA5DlGjvdlOq7C1137f2apLxZky4ux/Dy8H0GtmfJZB0fp3qoedsJbJz+/x3i8ZTjKCiId65Irb9tcCLayz3kh5Ts/ohkmoKr7VdkDTIHwkpa4fc+S3ulEjipAU5xlYFO67obuWWgXGrOTmxLRf4Rbeij6k7w7GbbkL41rTIPMGNT8IwcVdwYJ9TJwduSiESUH+a0mLz8U+SxJvXT4ZQO9gqsO2TzGEMNKYvzBYP7FcKHNI4Y0iRS3mksId48KxtkPVc+ySk5YdFyqf1zc="];
+    packages = with pkgs; [
+      firefox
+    #  thunderbird
+    ];
   };
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
- };
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  #  wget
+    vim direnv git nix-direnv waybar #eww for a more diy setup
+    (waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    })
+   )
+   # Notification daemon
+   dunst
+   libnotify
 
+   # Wallpaper managers
+   swww
+
+   # Use kitty by default 
+   kitty
+
+   # System lanuncher
+   rofi-wayland
+
+   #clipboard
+   cliphist
+
+  # task runner
+   just
+
+  # Cool widget guy
+  eww-wayland
+
+  # Starship prompt
+  starship
+
+  # home manager
+  home-manager
+
+  ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
 
+  programs.starship = {
+
+    enable = true; 
+
+  };
+  # Pin the nix registrey to the flake for easire package lookups
+  
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "DroidSansMono" ]; })
+  ];
+
+  # programs.hyprland = {
+  #   enable = true;
+  #   package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  # };
+
+  # Portals for screen sharing and file opening
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  # fonts.packages = with pkgs; [
-  #   (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "DroidSansMono" ]; })
-  # ];
+  # Sound enabler
 
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
 
-  environment.systemPackages = with pkgs; [
-    vim git waybar dunst libnotify swww kitty rofi-wayland just cliphist home-manager firefox
-  ];
+  # List services that you want to enable:
 
-  programs.hyprland = {
-    enable = true;
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [ 22 ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  networking.firewall.enable = true;
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.05"; # Did you read the comment?
+
+  #Garbage colector
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
   };
+
+
 }
