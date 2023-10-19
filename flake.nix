@@ -33,6 +33,10 @@
     # everything match nicely? Try nix-colors!
 
     nix-colors.url = "github:misterio77/nix-colors";
+
+	# One dark here as an exampl to use custom nvim plugins
+    plugin-onedark.url = "github:navarasu/onedark.nvim";
+    plugin-onedark.flake = false;
   };
 
   outputs = {
@@ -62,7 +66,10 @@
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     # Your custom packages and modifications, exported as overlays
+
+	# Removed this for now to put overlays into home manager
     overlays = import ./overlays {inherit inputs;};
+
     # Reusable nixos modules you might want to export
     # These are usually stuff you would upstream into nixpkgs
     nixosModules = import ./modules/nixos;

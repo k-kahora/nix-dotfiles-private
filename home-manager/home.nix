@@ -11,6 +11,20 @@
   ...
 }: {
   # You can import other home-manager modules here
+	nixpkgs = {
+    	overlays = [
+      	(final: prev: {
+		    # Put the vim plugins you want into the inputs
+			# use the following format to extend vim plugins
+        	vimPlugins = prev.vimPlugins // {
+          	own-onedark-nvim = prev.vimUtils.buildVimPlugin {
+            	name = "onedark";
+            	src = inputs.plugin-onedark;
+          	};
+        	};
+      	})
+    	];
+  	};
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
@@ -74,11 +88,11 @@
 
   nixpkgs = {
     # You can add overlays here
-    overlays = [
+   #overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
+   #  outputs.overlays.additions
+   #  outputs.overlays.modifications
+   #  outputs.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -89,7 +103,7 @@
       #     patches = [ ./change-hello-to-hi.patch ];
       #   });
       # })
-    ];
+   #];
     # Configure your nixpkgs instance
     config = {
       # Disable if you don't want unfree packages
