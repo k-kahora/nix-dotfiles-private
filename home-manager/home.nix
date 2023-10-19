@@ -1,4 +1,5 @@
-# This is your home-manager configuration file
+
+ #This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   inputs,
@@ -6,6 +7,7 @@
   lib,
   config,
   pkgs,
+  rycee-nur-expressions,
   ...
 }: {
   # You can import other home-manager modules here
@@ -25,7 +27,9 @@
     #./rofi.nix
     ./git.nix
     ./scripts.nix
+    #./emacs.nix
     #./eww.nix
+    ./nvim.nix
     ./lf.nix
   ];
 

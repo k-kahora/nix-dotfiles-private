@@ -126,7 +126,24 @@
         "home-manager": "home-manager",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "rycee-nur-expressions": "rycee-nur-expressions"
+      }
+    },
+    "rycee-nur-expressions": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696564979,
+        "narHash": "sha256-Lzzm6IcaOUl6njWl9811kI0aj8JIGuLoAbkQsLbuuGQ=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "5cbd4bbc1a4764cb47a1421c9f1cd68dd4f77d00",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "type": "gitlab"
       }
     },
     "systems": {

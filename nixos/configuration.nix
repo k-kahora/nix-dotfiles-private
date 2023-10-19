@@ -1,9 +1,8 @@
-
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ self, config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -77,6 +76,7 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+  #nixpkgs.overlays = [ (import self.inputs.emacs-overlay) ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -121,6 +121,7 @@
 
    #clipboard
    cliphist
+   wl-clipboard
 
   # task runner
    just
@@ -133,6 +134,10 @@
 
   # home manager
   home-manager
+  
+  #emacs29
+
+
 
   ];
 
@@ -152,15 +157,12 @@
   # Pin the nix registrey to the flake for easire package lookups
   
 
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "DroidSansMono" ]; })
-  ];
-
-  # programs.hyprland = {
-  #   enable = true;
-  #   package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-  # };
-
+  # fonts.packages = with pkgs; [
+  #   (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "DroidSansMono" ]; })
+  # ];
+  programs.hyprland = {
+    enable = true;
+  };
   # Portals for screen sharing and file opening
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
