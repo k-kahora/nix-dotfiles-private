@@ -63,6 +63,10 @@
       nvim-web-devicons
 
       {
+        plugin = nvim-metals;
+      }
+
+      {
         plugin = (nvim-treesitter.withPlugins (p: [
           p.tree-sitter-nix
           p.tree-sitter-vim
