@@ -152,8 +152,6 @@ decoration {
 
     blur {
         enabled = true
-    mk-start 
-    mk-toggle-gaps 
         size = 5
         passes = 1
         new_optimizations = true
@@ -288,7 +286,7 @@ bindm = $mainMod, mouse:273, resizewindow
 # bind = $mainMod, ;, movetoworkspace, special,
 
 # Special scripts
-bind = $mainMod, H, exec, bash ${mk-toggle-gaps}/bin/toggle-gaps,
+bind = $mainMod, H, exec, bash ${mk-toggle-gaps}/bin/toggle-gaps
 '';
   };
       home.file.".config/hypr/colors".text = ''
