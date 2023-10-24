@@ -1,8 +1,4 @@
-{pkgs, config, rycee-nur-expressions, ...}:
-let
-  nurNoPkgs = rycee-nur-expressions
-  
-in 
+{pkgs, config, ...}:
 {
   programs.emacs = {
     enable = true;

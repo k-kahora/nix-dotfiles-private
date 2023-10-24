@@ -1,5 +1,35 @@
 {config, pkgs, ...}:
 let
+
+  mk-decrease-border = pkgs.writeShellApplication {
+    name = "border-down";
+    text = ''
+      border_file="/home/malcolm/.config/hypr/.border.txt"
+      echo "5" > "$border_file"
+      border_size=$(<"$border_file")
+      hyprctl keyword general:border_size "$border_size"
+    '';
+  };
+  mk-increase-border = pkgs.writeShellApplication {
+    name = "border-up";
+    text = ''
+    border_file="/home/malcolm/.config/hypr/.border.txt"
+
+    if [ ! -f "$border_file" ]; then
+      echo "5" > "$border_file"
+    fi
+
+    border_size=$(<"$border_file")
+
+    increase_border() {
+      border_size=$((border_size + 5))
+      echo "$border_size" > "$border_file"
+    }
+    increase_border
+
+    hyprctl keyword general:border_size "$border_size"
+    '';
+  };
   
   mk-start = pkgs.writeShellApplication {
     name = "start";
@@ -286,6 +316,8 @@ bindm = $mainMod, mouse:273, resizewindow
 # bind = $mainMod, ;, movetoworkspace, special,
 
 # Special scripts
+bind = $mainMod, G, exec, bash ${mk-decrease-border}/bin/border-down
+bind = $mainMod, B, exec, bash ${mk-increase-border}/bin/border-up
 bind = $mainMod, H, exec, bash ${mk-toggle-gaps}/bin/toggle-gaps
 '';
   };

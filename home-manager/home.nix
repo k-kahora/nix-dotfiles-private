@@ -41,7 +41,7 @@
     #./rofi.nix
     ./git.nix
     ./scripts.nix
-    #./emacs.nix
+    ./emacs.nix
     #./eww.nix
     ./nvim.nix
     ./lf.nix

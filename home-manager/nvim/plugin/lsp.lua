@@ -42,6 +42,10 @@ require('lspconfig').lua_ls.setup {
     }
 }
 
+require('lspconfig').tsserver.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 require('lspconfig').ocamllsp.setup {
     on_attach = on_attach,
     capabilities = capabilities,
