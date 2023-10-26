@@ -69,6 +69,8 @@
       {
         plugin = (nvim-treesitter.withPlugins (p: [
           p.tree-sitter-nix
+          p.tree-sitter-javascript
+          p.tree-sitter-ocaml
           p.tree-sitter-vim
           p.tree-sitter-bash
           p.tree-sitter-lua

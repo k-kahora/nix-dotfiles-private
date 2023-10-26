@@ -38,6 +38,7 @@
     ./hypr.nix
     ./zsh.nix
     ./kitty.nix
+    ./tmux.nix
     #./rofi.nix
     ./git.nix
     ./scripts.nix
