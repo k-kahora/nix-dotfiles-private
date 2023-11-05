@@ -20,11 +20,11 @@
     # flake uitls in neccesaray
     flake-utils.url = "github:numtide/flake-utils";
 
-    #emacs-overlay = {
-   #  url = "github:nix-community/emacs-overlay";
-   #  inputs.nixpkgs.follows = "nixpkgs";
-   #  inputs.flake-utils.follows = "flake-utils";
-   #};
+    emacs-overlay = {
+    url = "github:nix-community/emacs-overlay";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-utils.follows = "flake-utils";
+   };
 
     # TODO: Add any other flake you might need
     # hardware.url = "github:nixos/nixos-hardware";

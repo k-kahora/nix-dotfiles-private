@@ -42,6 +42,34 @@ require('lspconfig').lua_ls.setup {
     }
 }
 
+require('lspconfig').cssls.setup {
+	cmd = {"vscode-css-language-server", "--stdio"},
+	filetyps = {"css", "scss", "less"},
+	settings =
+		{
+			css = {
+				validate = true
+			},
+			less = {
+				validate = true
+			},
+			scss = {
+				validate = true
+			}
+		},
+	single_file_support = true
+}
+
+require('lspconfig').html.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+	configurationSection = { "html", "css", "javascript" },
+	embeddedLanguages = {
+		css = true,
+		javascript = true
+	},
+	provideFormatter = true
+}
 require('lspconfig').tsserver.setup {
     on_attach = on_attach,
     capabilities = capabilities,

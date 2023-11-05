@@ -23,6 +23,7 @@
           	};
         	};
       	})
+        (import inputs.emacs-overlay)
     	];
   	};
   imports = [
