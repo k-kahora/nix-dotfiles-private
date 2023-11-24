@@ -43,10 +43,11 @@
     #./rofi.nix
     ./git.nix
     ./scripts.nix
-    ./emacs.nix
+    # ./emacs.nix
     #./eww.nix
     ./nvim.nix
     ./lf.nix
+    inputs.impermanence.nixosModules.home-manager.impermanence 
   ];
 
   home.packages = with pkgs;[
@@ -119,6 +120,10 @@
   home = {
     username = "malcolm";
     homeDirectory = "/home/malcolm";
+  };
+
+  home.persistence."/nix/persist/home/malcolm" = {
+    directories = [".ssh" ".config" "nix-dotfiles"];
   };
 
   # Add stuff for your user as you see fit:
