@@ -18,6 +18,11 @@
       fsType = "tmpfs";
       options = [ "defaults" "size=2G" "mode=755" ];
     };
+  fileSystems."/home/malcolm" =
+    { device = "none";
+      fsType = "tmpfs";
+      options = [ "size=2G" "mode=777" ];
+    };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/6C8B-917F";

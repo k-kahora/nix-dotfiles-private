@@ -122,9 +122,6 @@
     homeDirectory = "/home/malcolm";
   };
 
-  home.persistence."/nix/persist/home/malcolm" = {
-    directories = [".ssh" ".config" "nix-dotfiles"];
-  };
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;

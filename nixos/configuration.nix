@@ -107,6 +107,14 @@
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key.pub"
     ];
+    users."malcolm" = {
+      directories = [
+       "Documents"
+       "Desktop"
+       "nix-dotfiles"
+       { directory = ".ssh"; mode = "0700"; }
+      ];
+    };
   };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
