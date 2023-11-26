@@ -99,7 +99,6 @@
     directories = [
       "/etc/nixos"
       "/etc/NetworkManager/system-connections"
-      {directory = "/nix/persist/home/malcolm"; user = "malcolm"; mode = "u=rwx";}
     ];
     files = [
       "/etc/ssh/ssh_host_rsa_key"
