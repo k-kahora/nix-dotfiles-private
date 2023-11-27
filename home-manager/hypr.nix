@@ -33,11 +33,13 @@ let
   
   mk-start = pkgs.writeShellApplication {
     name = "start";
-    runtimeInputs = [pkgs.waybar pkgs.dunst];
+    runtimeInputs = [pkgs.waybar pkgs.dunst pkgs.networkmanagerapplet ];
     text = ''
     waybar &
     nm-applet --indicator &
     dunst &
+    swww init &
+    swww img /home/malcolm/Documents/Wallpapers/Adventure-Time-Christmas.jpg --resize fit &
     '';
   };
 

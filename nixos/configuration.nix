@@ -94,6 +94,8 @@
     wget
     git
     firefox
+    swww
+    unzip
   ];
 
   environment.persistence."/nix/persist" = {
@@ -112,11 +114,13 @@
        "Documents"
        "Desktop"
        "nix-dotfiles"
+       "clones"
        { directory = ".ssh"; mode = "0700"; }
       ];
     };
   };
-  progams.hyprland.enable = true;
+  programs.hyprland.enable = true;
+  programs.nm-applet.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -150,8 +154,14 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
 # MY ADDITIONS
+# Unfree software 
+  nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+  ];
 
 }
 

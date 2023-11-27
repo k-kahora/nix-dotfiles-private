@@ -40,7 +40,7 @@
     ./zsh.nix
     ./kitty.nix
     ./tmux.nix
-    #./rofi.nix
+    ./rofi.nix
     ./git.nix
     ./scripts.nix
     # ./emacs.nix
@@ -52,6 +52,8 @@
 
   home.packages = with pkgs;[
     rofi-emoji
+    pfetch
+    wl-clipboard
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -126,6 +128,9 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
+  
+  # Discord
+  programs.discord.enable = true;
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
