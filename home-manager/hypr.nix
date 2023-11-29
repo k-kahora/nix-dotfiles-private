@@ -125,13 +125,11 @@ env = XCURSOR_SIZE,24
 
 # forec the hyprchan
 misc {
-
-  force_hypr_chan = true
+  force_hypr_chan = false
   disable_hyprland_logo = false
   animate_manual_resizes = true
   animate_mouse_windowdragging = true
 }
-
 
 # TODO device specific config to allow ferris sweep behave diffrently than another device
 

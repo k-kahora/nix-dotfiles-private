@@ -96,6 +96,7 @@
     firefox
     swww
     unzip
+    discord
   ];
 
   environment.persistence."/nix/persist" = {

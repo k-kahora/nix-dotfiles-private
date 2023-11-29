@@ -35,7 +35,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
-    # ./starship.nix
+    ./starship.nix
     ./hypr.nix
     ./zsh.nix
     ./kitty.nix
@@ -53,6 +53,7 @@
   home.packages = with pkgs;[
     rofi-emoji
     pfetch
+    nitch
     wl-clipboard
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -129,8 +130,6 @@
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
   
-  # Discord
-  programs.discord.enable = true;
 
   # Enable home-manager and git
   programs.home-manager.enable = true;

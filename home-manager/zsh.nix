@@ -18,16 +18,14 @@
     };
     envExtra = ''
     export ZSHVAR="Hello Person"
+    export ZVM_VI_EDITOR="nvim"
+    '';
+    initExtra = ''
+       source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
     '';
   };
   home.file.".zshrc".text = ''
-
-
 #ZSH_THEME="refined"
 REFINED_CHAR_SYMBOL="⚡"
-
-
-
-
 '';
 }
