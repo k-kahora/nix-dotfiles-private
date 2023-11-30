@@ -7,6 +7,7 @@
   lib,
   config,
   pkgs,
+  nix-colors,
   rycee-nur-expressions,
   ...
 }: {
@@ -47,8 +48,12 @@
     #./eww.nix
     ./nvim.nix
     ./lf.nix
-    inputs.impermanence.nixosModules.home-manager.impermanence 
+    ./tofi.nix
+    inputs.nix-colors.homeManagerModules.default
+    # config.nur.repos.rycee.emacs-init
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.paraiso;
 
   home.packages = with pkgs;[
     rofi-emoji

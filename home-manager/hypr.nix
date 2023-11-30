@@ -165,7 +165,14 @@ general {
     resize_on_border  = true
     hover_icon_on_border = true
 
+    col.group_border = 0x6B240C 
+    col.group_border_active = 0x994D1C 
+
+
     layout = dwindle
+}
+
+group {
 }
 
 decoration {
@@ -223,6 +230,8 @@ dwindle {
     # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
     pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
     preserve_split = yes # you probably want this
+
+
 }
 
 master {
@@ -262,24 +271,51 @@ $mainMod = SUPER
 bind = $mainMod, Q, exec, kitty
 # Passes the selected screen into standard output and pipes it to swappy
 bind = $mainMod, D, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -
-bind = $mainMod, C, killactive, 
+bind = $mainMod, K, killactive, 
 bind = $mainMod, M, exit, 
 bind = $mainMod, E, exec, dolphin
 bind = $mainMod, SPACE, togglefloating, 
 bind = $mainMod, R, exec, rofi -show drun -show-icons
 bind = $mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
-bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, J, togglesplit, # dwindle
 
-bind = $mainMod, Tab, cyclenext,
-bind = $mainMod, Y, bringactivetotop,
+
+# code:10 -> exclamation point
+# Todo add an extension to hyprland that makes a visual for pinned windows
+# code:60 is "."
+I use the app wev to find codes
+bind = $mainMod, code:60, pin, 
+
+# TODO Hydra like commands to resize windows with keybindings
+
+# TODO Could be cool to disable the mouse with a white list of applications
+
+# Groups
+bind = $mainMod CTRL, G, togglegroup
+bind = $mainMod, G, changegroupactive, f
+
+# Cycles
+bind = $mainMod, N, cyclenext,
+bind = $mainMod, P, cyclenext, prev
+
+# Swaps
+bind = $mainMod CTRL, N, swapnext,
+bind = $mainMod CTRL, P, swapnext, prev
 
 # Move focus with mainMod + arrow keys
-bind = $mainMod, left, movefocus, l
-bind = $mainMod, right, movefocus, r
-bind = $mainMod, up, movefocus, u
-bind = $mainMod, down, movefocus, d
+bind = $mainMod, F, fullscreen, 0
+bind = $mainMod CTRL, F, fakefullscreen, 
 
+
+# TODO Special workspace
+# code:20 is "-"
+bind = $mainMod CTRL, code:20, movetoworkspace, special
+bind = $mainMod, code:20, togglespecialworkspace, special
+
+# Special scripts
+# bind = $mainMod, G, exec, bash ${mk-decrease-border}/bin/border-down
+bind = $mainMod, B, exec, bash ${mk-increase-border}/bin/border-up
+bind = $mainMod, H, exec, bash ${mk-toggle-gaps}/bin/toggle-gaps
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, workspace, 1
 bind = $mainMod, 2, workspace, 2
@@ -293,16 +329,16 @@ bind = $mainMod, 9, workspace, 9
 bind = $mainMod, 0, workspace, 10
 
 # Move active window to a workspace with mainMod + SHIFT + [0-9]
-bind = $mainMod SHIFT, 1, movetoworkspace, 1
-bind = $mainMod SHIFT, 2, movetoworkspace, 2
-bind = $mainMod SHIFT, 3, movetoworkspace, 3
-bind = $mainMod SHIFT, 4, movetoworkspace, 4
-bind = $mainMod SHIFT, 5, movetoworkspace, 5
-bind = $mainMod SHIFT, 6, movetoworkspace, 6
-bind = $mainMod SHIFT, 7, movetoworkspace, 7
-bind = $mainMod SHIFT, 8, movetoworkspace, 8
-bind = $mainMod SHIFT, 9, movetoworkspace, 9
-bind = $mainMod SHIFT, 0, movetoworkspace, 10
+bind = $mainMod CTRL, 1, movetoworkspace, 1
+bind = $mainMod CTRL, 2, movetoworkspace, 2
+bind = $mainMod CTRL, 3, movetoworkspace, 3
+bind = $mainMod CTRL, 4, movetoworkspace, 4
+bind = $mainMod CTRL, 5, movetoworkspace, 5
+bind = $mainMod CTRL, 6, movetoworkspace, 6
+bind = $mainMod CTRL, 7, movetoworkspace, 7
+bind = $mainMod CTRL, 8, movetoworkspace, 8
+bind = $mainMod CTRL, 9, movetoworkspace, 9
+bind = $mainMod CTRL, 0, movetoworkspace, 10
 
 # Scroll through existing workspaces with mainMod + scroll
 bind = $mainMod, mouse_down, workspace, e+1
@@ -312,13 +348,7 @@ bind = $mainMod, mouse_up, workspace, e-1
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
 
-# TODO Special workspace
-# bind = $mainMod, ;, movetoworkspace, special,
 
-# Special scripts
-bind = $mainMod, G, exec, bash ${mk-decrease-border}/bin/border-down
-bind = $mainMod, B, exec, bash ${mk-increase-border}/bin/border-up
-bind = $mainMod, H, exec, bash ${mk-toggle-gaps}/bin/toggle-gaps
 '';
   };
       home.file.".config/hypr/colors".text = ''

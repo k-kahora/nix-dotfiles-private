@@ -97,6 +97,11 @@
     swww
     unzip
     discord
+    # (emacs-overlay.emacsWithPackagesFromUsePackage {
+    #   config = /home/malcolm/nix-dotfiles/home-manager/emacs.el;
+    #   alwaysEnsure = t;
+    #
+    # })
   ];
 
   environment.persistence."/nix/persist" = {
@@ -114,6 +119,7 @@
       directories = [
        "Documents"
        "Desktop"
+       "Pictures"
        "nix-dotfiles"
        "clones"
        { directory = ".ssh"; mode = "0700"; }

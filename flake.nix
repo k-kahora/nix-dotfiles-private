@@ -8,10 +8,13 @@
     # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
-    rycee-nur-expressions = {
-      url = "gitlab:rycee/nur-expressions";
-      flake = false;
-    };
+
+    nur.url = "github:nix-community/NUR";
+
+    # rycee-nur-expressions = {
+    #   url = "gitlab:rycee/nur-expressions";
+    #   flake = false;
+    # };
 
 
     # Impertance Module
@@ -50,6 +53,7 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
+    nur,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -92,6 +96,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           # > Our main nixos configuration file <
+          nur.nixosModules.nur
           ./nixos/configuration.nix
         ];
       };

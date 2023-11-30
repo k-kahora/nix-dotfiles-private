@@ -175,6 +175,21 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1701290757,
+        "narHash": "sha256-Bv94UMJWj2IIXHmugu4phmXuW++Wb/lsjzjJBv7rnkQ=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "0e51ca08c93d3082a1affc08588a2c89cf701320",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "plugin-onedark": {
       "flake": false,
       "locked": {
@@ -200,24 +215,8 @@
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "plugin-onedark": "plugin-onedark",
-        "rycee-nur-expressions": "rycee-nur-expressions"
-      }
-    },
-    "rycee-nur-expressions": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1696564979,
-        "narHash": "sha256-Lzzm6IcaOUl6njWl9811kI0aj8JIGuLoAbkQsLbuuGQ=",
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "rev": "5cbd4bbc1a4764cb47a1421c9f1cd68dd4f77d00",
-        "type": "gitlab"
-      },
-      "original": {
-        "owner": "rycee",
-        "repo": "nur-expressions",
-        "type": "gitlab"
+        "nur": "nur",
+        "plugin-onedark": "plugin-onedark"
       }
     },
     "systems": {
