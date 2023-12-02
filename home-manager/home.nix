@@ -57,6 +57,7 @@
 
   home.packages = with pkgs;[
     rofi-emoji
+    tofi
     pfetch
     nitch
     wl-clipboard

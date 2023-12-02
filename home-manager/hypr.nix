@@ -82,7 +82,7 @@ in
   text_size=20
   text_font=sans-serif
   paint_mode=brush
-  early_exit=false
+  early_exit=true
   fill_shape=false
   '';
 
@@ -275,7 +275,7 @@ bind = $mainMod, K, killactive,
 bind = $mainMod, M, exit, 
 bind = $mainMod, E, exec, dolphin
 bind = $mainMod, SPACE, togglefloating, 
-bind = $mainMod, R, exec, rofi -show drun -show-icons
+bind = $mainMod, R, exec, tofi-drun
 bind = $mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
 bind = $mainMod, J, togglesplit, # dwindle
 

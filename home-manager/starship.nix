@@ -7,10 +7,14 @@
         add_newline = true;
         command_timeout = 500;
         continuation_prompt = "[∙](bright-black) ";
-        format = "[](0x9A348E)$username$hostname$localip$shlvl$singularity$kubernetes[](fg:0x9A348E bg:0xDA627D)$directory$vcsh[](fg:0xDA627D bg:0xFCA17D)$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch[](fg:0x86BBD8 bg:0x06969A)$docker_context$package$buf[](fg:0xFCA17D bg:0x86BBD8)$c$cmake$cobol$container$daml$dart$deno$dotnet$elixir$elm$erlang$golang$haskell$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$pulumi$purescript$python$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$nix_shell$conda$spack$memory_usage$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$cmd_duration$line_break$jobs$battery[](fg:0x06969A bg:0x33658A)$time$status$shell$character";
         right_format = "";
         scan_timeout = 30;
-        
+        format = ''
+[╭─[user](bold yellow)─────────](bold green)[❯](bold yellow) $username
+[┣─[system](bold purple)──────](bold green)[❯](bold purple) $shell$hostname$battery
+[┣─[project](bold cyan)────](bold green)[❯](bold cyan) $directory$rust$git_branch$git_status$package$golang$terraform$docker_context$python$docker_context$nodejs
+[╰─[status](bold blue)────](bold green)[❯](bold blue) $localip
+        '';
         aws = {
           format = "[$symbol($profile )(($region) )([$duration] )]($style)";
           symbol = "🅰 ";
@@ -28,17 +32,17 @@
           disabled = true;
         };
         battery = {
-          format = "[$symbol$percentage]($style) ";
-          charging_symbol = " ";
-          discharging_symbol = " ";
-          empty_symbol = " ";
-          full_symbol = " ";
-          unknown_symbol = " ";
+          format = "[$symbol $percentage]($style)";
+          charging_symbol = "󰂄";
+          discharging_symbol = "󱟤";
+          empty_symbol = "󰂎";
+          full_symbol = "󱟢";
+          unknown_symbol = "󰂑";
           disabled = false;
           display = [
             {
               style = "red bold";
-              threshold = 10;
+              threshold = 100; # Always show the batterey
             }
           ];
         };
@@ -72,9 +76,12 @@
         character = {
           format = "$symbol ";
           vicmd_symbol = "[❮](bold green)";
+          # TODO These commands do not work for some reason
+          vimcmd_replace_symbol = "[❮](bold purple)";
+          vimcmd_visual_symbol = "[❮](bold blue)";
           disabled = false;
-          success_symbol = "[➜](bold green) ";
-          error_symbol = "[✗](bold red) ";
+          success_symbol = "[😊](bold green) ";
+          error_symbol = "[👿](bold red) ";
         };
         cmake = {
           format = "[$symbol($version )]($style)";
@@ -178,7 +185,7 @@
           repo_root_format = "[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) ";
           style = "cyan bold bg:0xDA627D";
           truncate_to_repo = true;
-          truncation_length = 3;
+          truncation_length = 8;
           truncation_symbol = "…/";
           use_logical_path = true;
           use_os_path_sep = true;
@@ -186,16 +193,18 @@
         directory.substitutions = {
           # Here is how you can shorten some long paths by text replacement;
           # similar to mapped_locations in Oh My Posh:;
-          "Documents" = " ";
+          "Documents" = "󰈙";
           "Downloads" = " ";
           "Music" = " ";
           "Pictures" = " ";
+          "nix-dotfiles" = "󱌇";
+          "clones" = "";
           # Keep in mind that the order matters. For example:;
           # "Important Documents" = "  ";
           # will not be replaced, because "Documents" was already substituted before.;
           # So either put "Important Documents" before "Documents" or use the substituted version:;
           # "Important  " = "  ";
-          "Important " = " ";
+          "Important-󰈙" = "󰈙";
         };
         docker_context = {
           format = "[$symbol$context]($style) ";
