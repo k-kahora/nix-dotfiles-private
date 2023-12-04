@@ -1,5 +1,6 @@
 {pkgs, config, ...}:
 {
+  home.packages = with pkgs; [ eza ];
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -13,8 +14,13 @@
       ];
     };
     shellAliases = {
-      ll = "ls -l";
+      ll = "${pkgs.eza}/bin/eza -l --color=always  --group-directories-first";
+      lt = "${pkgs.eza}/bin/eza -aT --color=always  --group-directories-first";
+      la = "${pkgs.eza}/bin/eza -a --color=always  --group-directories-first";
+      ls = "${pkgs.eza}/bin/eza -al --color=always  --group-directories-first";
+      "l." = "${pkgs.eza}/bin/eza -al $* | grep \"^\.\" --color=always  --group-directories-first";
       ".." = "cd ..";
+
     };
     envExtra = ''
     export ZSHVAR="Hello Person"

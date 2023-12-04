@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{config, pkgs, inputs, ...}:
 let
 
   mk-decrease-border = pkgs.writeShellApplication {
@@ -88,6 +88,8 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+    # package = inputs.hyprland.packages.${pkgs.system}.hyprland; # Latest hyprland
+    package = pkgs.hyprland;
     extraConfig = ''
     
 ########################################################################################
@@ -158,29 +160,35 @@ general {
     gaps_out = 20
     border_size = 2
     # Active border color
-    col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+    col.active_border =   rgb(${config.colorScheme.colors.base01}) rgb(${config.colorScheme.colors.base01}) 45deg
     # Inactive borde color
     col.inactive_border = rgba(595959aa)
     # Resizing windows
     resize_on_border  = true
     hover_icon_on_border = true
 
-    col.group_border = 0x6B240C 
-    col.group_border_active = 0x994D1C 
+    # col.nogroup_border = rgb(${config.colorScheme.colors.base0F})
 
 
     layout = dwindle
 }
 
-group {
-}
+# group {
+#     col.group_border = rgb(${config.colorScheme.colors.base0F}) rgb(${config.colorScheme.colors.base0F}) 45deg
+#     col.group_border_active = rgb(${config.colorScheme.colors.base0D}) rgb(${config.colorScheme.colors.base0D}) 45deg
+#
+#     groupbar {
+#       col.active = rgb(${config.colorScheme.colors.base0A}) rgb(${config.colorScheme.colors.base0A}) 45deg
+#       col.inactive = rgb(${config.colorScheme.colors.base06}) rgb(${config.colorScheme.colors.base06}) 45deg
+#     }
+#
+# }
 
 decoration {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
     rounding = 10
     # anti aliasing on edges
-    multisample_edges = true
 
     # Active opacity
     active_opacity = 0.9
@@ -253,10 +261,10 @@ device:epic-mouse-v1 {
 # Example windowrule v1
 # windowrule = float, ^(kitty)$
 # Example windowrule v2
-# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
+windowrulev2 = float,class:Dolphin,title:Dolphin
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 
-windowrule = float, ^(dolphin)$
+windowrulev2 = float,class:emacs-run-launcher,title:emacs-run-launcher
 
 binds {
 
@@ -275,7 +283,7 @@ bind = $mainMod, K, killactive,
 bind = $mainMod, M, exit, 
 bind = $mainMod, E, exec, dolphin
 bind = $mainMod, SPACE, togglefloating, 
-bind = $mainMod, R, exec, tofi-drun
+bind = $mainMod, R, exec, tofi-drun --drun-launch=true
 bind = $mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
 bind = $mainMod, J, togglesplit, # dwindle
 
@@ -293,6 +301,9 @@ bind = $mainMod, code:60, pin,
 # Groups
 bind = $mainMod CTRL, G, togglegroup
 bind = $mainMod, G, changegroupactive, f
+
+bind = $mainMod, O, moveoutofgroup
+bind = $mainMod K, I, moveintogroup, u
 
 # Cycles
 bind = $mainMod, N, cyclenext,

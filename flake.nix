@@ -20,7 +20,9 @@
     # Impertance Module
     impermanence.url = "github:nix-community/impermanence";
     impermanence.inputs.nixpkgs.follows = "nixpkgs";
-    
+
+    # Hyprland latest git release
+    # hyprland.url = "github:hyprwm/Hyprland";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
@@ -53,7 +55,6 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
-    nur,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -96,7 +97,6 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           # > Our main nixos configuration file <
-          nur.nixosModules.nur
           ./nixos/configuration.nix
         ];
       };

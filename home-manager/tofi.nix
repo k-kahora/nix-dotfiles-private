@@ -54,7 +54,8 @@
 	# Default text color
 	#
 	# All text defaults to this color if not otherwise specified.
-	text-color = #${config.colorScheme.colors.base05} # 5 looked good
+	text-color = #${config.colorScheme.colors.base04} 
+    # 5 looked good
 
 	# All pieces of text have the same theming attributes available:
 	#
@@ -146,7 +147,7 @@
 ### Text layout
 #
 	# Prompt to display.
-	prompt-text = "󱓟 "
+	prompt-text = "Launch 󱓟 "
 
 	# Extra horizontal padding between prompt and input.
 	prompt-padding = 0

@@ -26,7 +26,7 @@
   # This is for GRUB in EFI mode
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.device = "nodev";
-  networking.hostName = "banana-boat";
+  networking.hostName = "Nukeproof";
   networking.networkmanager.enable = true;
 
   # networking.hostName = "nixos"; # Define your hostname.
@@ -96,7 +96,38 @@
     firefox
     swww
     unzip
+    gtk3 # Needed to use emacs as my run launcher
+    ripgrep
     discord
+    killall
+    (pkgs.emacsWithPackagesFromUsePackage {
+      package = pkgs.emacs-git;  # replace with pkgs.emacsPgtk, or another version if desired.
+      config = ./config.org; # Org-Babel configs also supported
+
+      defaultInitFile = false;
+      # alwaysEnsure = true;
+
+      # Optionally provide extra packages not in the configuration file.
+      extraEmacsPackages = epkgs: [
+        epkgs.use-package
+        epkgs.magit
+        epkgs.vterm
+        epkgs.evil
+        epkgs.rainbow-delimiters
+        epkgs.org-roam
+        epkgs.counsel
+
+      ];
+
+      # alwaysEnsure = true;
+
+      # Optionally override derivations.
+      override = epkgs: epkgs // {
+        somePackage = epkgs.melpaPackages.somePackage.overrideAttrs(old: {
+           # Apply fixes here
+         });
+       };
+     })
     # (emacs-overlay.emacsWithPackagesFromUsePackage {
     #   config = /home/malcolm/nix-dotfiles/home-manager/emacs.el;
     #   alwaysEnsure = t;
@@ -121,9 +152,21 @@
        "Desktop"
        "Pictures"
        "nix-dotfiles"
+       
+       # STATEFUL
+       ".config/doom" # This is temporary while I figure out what I need to do make a custom emacs    
+       ".config/emacs" # ^
+       #".emacs.d"
+       # STATEFUL
+
+       "Projects"
        "clones"
        { directory = ".ssh"; mode = "0700"; }
       ];
+      # This is temporary until I set up emacs on home manager
+      # When doing files in the home directory set them up so the 
+      # user is <user> it defaults to root
+      files = [".emacs-profiles.el"];
     };
   };
   programs.hyprland.enable = true;
@@ -162,12 +205,15 @@
 
 # MY ADDITIONS
 # Unfree software 
+  nixpkgs.overlays = [(import inputs.emacs-overlay)];
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
 
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    emacs-all-the-icons-fonts
+    
   ];
 
 }

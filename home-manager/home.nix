@@ -50,7 +50,6 @@
     ./lf.nix
     ./tofi.nix
     inputs.nix-colors.homeManagerModules.default
-    # config.nur.repos.rycee.emacs-init
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.paraiso;
