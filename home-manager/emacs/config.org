@@ -1,0 +1,75 @@
+* Disable use package
+All packages shoud be installed by nix, use package is just there to ensure that there is consistent configuration between packages, use package should never install a packages just configure
+#+begin_src emacs-lisp :tangle yes
+(setq use-package-always-ensure nil)
+#+end_src
+- :init executes before package is loaded
+- :config executes after a package is loaded
+- :bind is neat becaus al binds can be accesed with =describe-personal-bindings=
+* Zooming
+#+begin_src emacs-lisp :tangle yes
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) ;; Make this work with track ball # TODO
+#+end_src
+* Diminsh
+This package implements hiding or abbreviation of the modeline displays (lighters) of minor-modes.  With this package installed, you can add ‘:diminish’ to any use-package block to hide that particular mode in the modeline.
+
+#+begin_src emacs-lisp :tangle no
+(use-package diminish)
+#+end_src
+
+
+* Move backups to trash
+#+begin_src emacs-lisp :tangle yes
+(setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
+#+end_src
+* Evil Mode
+#+begin_src emacs-lisp :tangle yes
+(use-package evil
+  :config (evil-mode 1))
+
+#+end_src
+
+* Fonts
+
+#+begin_src emacs-list :tangle yes
+
+(set-face-attribute 'default nil
+  :font "JetBrains Mono"
+  :height 110
+  :weight 'medium)
+(set-face-attribute 'variable-pitch nil
+  :font "JetBrains Mono"
+  :height 120
+  :weight 'medium)
+(set-face-attribute 'fixed-pitch nil
+  :font "JetBrains Mono"
+  :height 110
+  :weight 'medium)
+;; Makes commented text and keywords italics.
+;; This is working in emacsclient but not emacs.
+;; Your font must have an italic face available.
+(set-face-attribute 'font-lock-comment-face nil
+  :slant 'italic)
+(set-face-attribute 'font-lock-keyword-face nil
+  :slant 'italic)
+
+;; This sets the default font on all graphical frames created after restarting Emacs.
+;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
+;; are not right unless I also add this method of setting the default font.
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono-11"))
+
+;; Uncomment the following line if line spacing needs adjusting.
+(setq-default line-spacing 0.12)
+
+
+#+end_src
+* Rainbow Delimeter
+
+#+begin_src emacs-lisp :tangle yes
+(use-package rainbow-delimeters)
+
+
+#+end_src
