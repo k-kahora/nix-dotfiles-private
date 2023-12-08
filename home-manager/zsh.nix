@@ -1,25 +1,37 @@
 {pkgs, config, ...}:
 {
-  home.packages = with pkgs; [ eza ];
+
+  home.packages = with pkgs; [
+    eza
+    dwt1-shell-color-scripts
+    zsh-powerlevel10k
+  ];
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-    oh-my-zsh = {
-      enable = true;
-      theme = "avit";
-      plugins = [
-        "git"
-        "direnv"
-      ];
-    };
+    plugins = [  {
+      name = "powerlevel10k";
+      src = pkgs.zsh-powerlevel10k;
+      file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    }
+    {
+      name = "powerlevel10k-config";
+      src = ./p10k-config;
+      file = "p10k.zsh";
+    }
+
+  ];
+    # Not sure the point of "$*" in the l. alias stole it from distro tubes config
     shellAliases = {
-      ll = "${pkgs.eza}/bin/eza -l --color=always  --group-directories-first";
+      ll = "${pkgs.eza}/bin/eza -l -color=always  --group-directories-first";
       lt = "${pkgs.eza}/bin/eza -aT --color=always  --group-directories-first";
       la = "${pkgs.eza}/bin/eza -a --color=always  --group-directories-first";
       ls = "${pkgs.eza}/bin/eza -al --color=always  --group-directories-first";
-      "l." = "${pkgs.eza}/bin/eza -al $* | grep \"^\.\" --color=always  --group-directories-first";
+      "l." = "${pkgs.eza}/bin/eza -al --color=always --group-directories-first $* | grep \"^\.\"";
       ".." = "cd ..";
+      "emax" = "emacs --init-directory=~/nix-dotfiles/home-manager/emacs";
 
     };
     envExtra = ''
@@ -31,6 +43,7 @@
     '';
   };
   home.file.".zshrc".text = ''
+${pkgs.dwt1-shell-color-scripts}/bin/colorscript random
 #ZSH_THEME="refined"
 REFINED_CHAR_SYMBOL="⚡"
 '';

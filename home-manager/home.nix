@@ -38,7 +38,8 @@
     # ./nvim.nix
     ./starship.nix
     ./hypr.nix
-    ./zsh.nix
+    #./zsh.nix
+    ./fish.nix
     ./kitty.nix
     ./tmux.nix
     ./rofi.nix
@@ -140,7 +141,7 @@
   programs.home-manager.enable = true;
   programs.git.enable = true;
   programs.direnv = {
-    enableZshIntegration = true;
+    # enableZshIntegration = true;
     nix-direnv.enable = true;
   };
 

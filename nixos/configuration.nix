@@ -100,6 +100,7 @@
     ripgrep
     discord
     killall
+    wpa_supplicant # Need this to connect to eduroam via cmdline
     (pkgs.emacsWithPackagesFromUsePackage {
       package = pkgs.emacs-git;  # replace with pkgs.emacsPgtk, or another version if desired.
       config = ./config.org; # Org-Babel configs also supported
@@ -110,12 +111,19 @@
       # Optionally provide extra packages not in the configuration file.
       extraEmacsPackages = epkgs: [
         epkgs.use-package
-        epkgs.magit
+        epkgs.magit # TODO
         epkgs.vterm
         epkgs.evil
+        epkgs.evil-collection
         epkgs.rainbow-delimiters
-        epkgs.org-roam
-        epkgs.counsel
+        epkgs.org-roam # TODO
+        epkgs.company
+        epkgs.dashboard # TODO
+        epkgs.projectile # TODO
+        epkgs.dired-open # TODO
+        epkgs.dired-preview # TODO
+        epkgs.elfeed # TODO
+        epkgs.general
 
       ];
 
@@ -210,9 +218,12 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
 
+
   fonts.packages = with pkgs; [
+
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     emacs-all-the-icons-fonts
+    jetbrains-mono
     
   ];
 

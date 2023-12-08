@@ -2,6 +2,7 @@
 {
   programs.starship = {
       enable = true;
+      enableTransience = true;
       settings = {
         # "$schema" = "https://starship.rs/config-schema.json";
         add_newline = true;
@@ -9,6 +10,7 @@
         continuation_prompt = "[∙](bright-black) ";
         right_format = "";
         scan_timeout = 30;
+
         format = ''
 [╭─[user](bold yellow)─────────](bold green)[❯](bold yellow) $username
 [┣─[system](bold purple)──────](bold green)[❯](bold purple) $shell$hostname$battery
@@ -178,7 +180,7 @@
         directory = {
           disabled = false;
           fish_style_pwd_dir_length = 0;
-          format = "[$path]($style)[$read_only]($read_only_style) ";
+          format = "[ 󰉓  ](bg:white fg:bold black)[ $path](bg:black)[$read_only]($read_only_style) "; # Love this look
           home_symbol = "~";
           read_only = " ";
           read_only_style = "red";
