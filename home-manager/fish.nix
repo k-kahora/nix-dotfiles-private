@@ -4,19 +4,36 @@
 
   programs.fish.enable = true;
   programs.fish = {
+    # functions = {
+    #   nix-shell-expand = {
+    #     body = ''
+    #     set -l package (string trim (string replace -r 'nix-shell -p ' '' -- $argv))
+    #     nix-shell -p $package --run fish
+    #   '';
+    #   };
+    # };
 
     interactiveShellInit = ''
     ${pkgs.dwt1-shell-color-scripts}/bin/colorscript random
     fish_vi_key_bindings
+    # abbr -a 'nix-shell -p' nix-shell-expand
+    # Allows vterm to have proper clear command when using fish
+    if [ "$INSIDE_EMACS" = 'vterm' ]
+        function clear
+            vterm_printf "51;Evterm-clear-scrollback";
+            tput clear;
+        end
+    end
     '';
     shellAbbrs = {
-      ll = "${pkgs.eza}/bin/eza -l -color=always  --group-directories-first";
+      ll = "${pkgs.eza}/bin/eza -l --color=always  --group-directories-first";
       lt = "${pkgs.eza}/bin/eza -aT --color=always  --group-directories-first";
       la = "${pkgs.eza}/bin/eza -a --color=always  --group-directories-first";
       ls = "${pkgs.eza}/bin/eza -al --color=always  --group-directories-first";
       "l." = "${pkgs.eza}/bin/eza -al --color=always --group-directories-first $* | grep \"^\.\"";
       ".." = "cd ..";
       "emax" = "emacs --init-directory=~/nix-dotfiles/home-manager/emacs";
+      "nixos-build" = "sudo nixos-rebuild switch --flake ~/nix-dotfiles/#myNixos";
     };
 
   };

@@ -98,6 +98,11 @@
     # '';
   };
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    SHELL = "${pkgs.fish}/bin/fish";
+  };
+
   nixpkgs = {
     # You can add overlays here
    #overlays = [

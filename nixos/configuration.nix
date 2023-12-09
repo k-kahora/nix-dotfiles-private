@@ -68,7 +68,9 @@
   # Enable sound.
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
-
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  nixpkgs.config.pulseaudio = true;
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -96,10 +98,11 @@
     firefox
     swww
     unzip
+    zip
     gtk3 # Needed to use emacs as my run launcher
     ripgrep
     discord
-    killall
+    killall # Type killall emacs to get rid of all emacs processec
     wpa_supplicant # Need this to connect to eduroam via cmdline
     (pkgs.emacsWithPackagesFromUsePackage {
       package = pkgs.emacs-git;  # replace with pkgs.emacsPgtk, or another version if desired.
@@ -110,11 +113,26 @@
 
       # Optionally provide extra packages not in the configuration file.
       extraEmacsPackages = epkgs: [
+        epkgs.diminish
+	epkgs.perspective
+
+	# Themes
+	epkgs.doom-themes
+	epkgs.doom-modeline
+	epkgs.nimbus-theme
+	epkgs.ef-themes
+
         epkgs.use-package
         epkgs.magit # TODO
         epkgs.vterm
+        epkgs.vterm-toggle
+	
+        # Evil mode
         epkgs.evil
+	epkgs.evil-commentary
         epkgs.evil-collection
+	epkgs.evil-goggles
+
         epkgs.rainbow-delimiters
         epkgs.org-roam # TODO
         epkgs.company
@@ -123,8 +141,13 @@
         epkgs.dired-open # TODO
         epkgs.dired-preview # TODO
         epkgs.elfeed # TODO
+	epkgs.hl-todo
         epkgs.general
-
+        epkgs.which-key
+        epkgs.hydra
+        epkgs.vertico
+        epkgs.eshell-toggle
+        epkgs.eshell-syntax-highlighting
       ];
 
       # alwaysEnsure = true;
