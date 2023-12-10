@@ -24,6 +24,9 @@
             tput clear;
         end
     end
+    # Run fish_key_reader then enter you keybindg to see how to bind a key to something
+    bind --erase \el
+    bind \el forward-char
     '';
     shellAbbrs = {
       ll = "${pkgs.eza}/bin/eza -l --color=always  --group-directories-first";

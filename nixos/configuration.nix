@@ -54,8 +54,32 @@
 
 
   # Enable the Plasma 5 Desktop Environment.
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
+  
+
+  # Gnome
   services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  # Remvove the bullshit
+  environment.gnome.excludePackages = (with pkgs; [
+  gnome-photos
+  gnome-tour
+  ]) ++ (with pkgs.gnome; [
+    cheese # webcam tool
+    gnome-music
+    gnome-terminal
+    gedit # text editor
+    epiphany # web browser
+    geary # email reader
+    evince # document viewer
+    gnome-characters
+    totem # video player
+    tali # poker game
+    iagno # go game
+    hitori # sudoku game
+    atomix # puzzle game
+  ]);
   
 
   # Configure keymap in X11
@@ -99,9 +123,14 @@
     swww
     unzip
     zip
+    direnv
     gtk3 # Needed to use emacs as my run launcher
     ripgrep
     discord
+    
+    # Gnome externsions
+    gnomeExtensions.pop-shell
+
     killall # Type killall emacs to get rid of all emacs processec
     wpa_supplicant # Need this to connect to eduroam via cmdline
     (pkgs.emacsWithPackagesFromUsePackage {
@@ -129,9 +158,11 @@
 	
         # Evil mode
         epkgs.evil
-	epkgs.evil-commentary
+	    epkgs.evil-commentary
         epkgs.evil-collection
-	epkgs.evil-goggles
+	    epkgs.evil-goggles
+
+        epkgs.avy
 
         epkgs.rainbow-delimiters
         epkgs.org-roam # TODO
@@ -139,14 +170,17 @@
         epkgs.dashboard # TODO
         epkgs.projectile # TODO
         epkgs.dired-open # TODO
+	epkgs.envrc
         epkgs.dired-preview # TODO
         epkgs.elfeed # TODO
-	epkgs.hl-todo
+	    epkgs.hl-todo
         epkgs.general
         epkgs.which-key
         epkgs.hydra
         epkgs.vertico
         epkgs.eshell-toggle
+        epkgs.all-the-icons
+        epkgs.all-the-icons-dired
         epkgs.eshell-syntax-highlighting
       ];
 
@@ -197,7 +231,8 @@
       # This is temporary until I set up emacs on home manager
       # When doing files in the home directory set them up so the 
       # user is <user> it defaults to root
-      files = [".emacs-profiles.el"];
+      # files = [".emacs-profiles.el"];
+      files = [{file = ".local/share/fish/fish_history"; parentDirectory = {mode = "0777";};}];
     };
   };
   programs.hyprland.enable = true;
@@ -244,7 +279,7 @@
 
   fonts.packages = with pkgs; [
 
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "Ubuntu"]; })
     emacs-all-the-icons-fonts
     jetbrains-mono
     

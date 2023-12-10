@@ -17,7 +17,8 @@ All packages shoud be installed by nix, use package is just there to ensure that
           evil-undo-system 'undo-redo)  ;; Adds vim-like C-r redo functionality
     (evil-mode))
 
-
+(global-unset-key (kbd "C-u"))
+(global-set-key (kbd "C-u" ) 'evil-scroll-up)
                 ;; Expands to: (elpaca evil (use-package evil :demand t))
 (evil-commentary-mode) ;; hit gc on a region to comment it
 (evil-goggles-mode) ;; shows what you command did
@@ -193,6 +194,7 @@ When cycling through a directory is thows the file on the right
     "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
+  ;; Allow evil to bind this key
 
   (mk/leader-keys
     "b" '(:ignore t :wk "Bookmarks/Buffers")
@@ -230,6 +232,7 @@ When cycling through a directory is thows the file on the right
     "e r" '(eval-region :wk "Evaluate elisp in region")
     "e R" '(eww-reload :which-key "Reload current page in EWW")
     "e s" '(eshell :which-key "Eshell")
+    "e i" '(ielm :which-key "ielm")
     "e w" '(eww :which-key "EWW emacs web wowser"))
 
   (mk/leader-keys
@@ -540,10 +543,10 @@ When cycling through a directory is thows the file on the right
 #+end_src
 * Doom mode line
 #+begin_src emacs-lisp
-(use-package doom-themes
-  :after doom-themes
-  :config
-  (load-theme doom-Iosvkem))
+;; (use-package doom-themes
+;;   :after doom-themes
+;;   :config
+  (load-theme 'doom-Iosvkem t)
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :config (setq doom-modeline-height 20
@@ -551,3 +554,54 @@ When cycling through a directory is thows the file on the right
                 doom-modeline-perp-name t
                 doom-modeline-persp-icon t))
 #+end_src
+* Treesitter
+
+
+#+begin_src emacs-lisp
+
+(setq treesit-language-source-alist 
+  '((ocaml "https://github.com/semgrep/ocaml-tree-sitter-core")))
+
+
+#+end_src
+* Avy
+
+#+begin_src emacs-lisp 
+;; (defun avy-goto-char-timer ()
+;;   (interactive)
+;;   (avy-goto-char-timer))
+
+(defun avy-goto-line-same-column ()
+  (interactive)
+    (avy-goto-char-timer))
+
+
+;; (declare-function 'avy-goto-char-timer "avy")
+;; (evil-define-avy-motion avy-goto-char-timer inclusive)
+;; (define-key evil-motion-state-map (kbd "SPC") #'evil-avy-goto-char-timer)
+
+(declare-function 'avy-goto-line-same-column "avy")
+(evil-define-avy-motion avy-goto-line-same-column inclusive)
+(define-key evil-motion-state-map (kbd "SPC") #'evil-avy-goto-line-same-column)
+
+;; (evil-define-key 'normal avy-mode-map (kbd "SPC") 'avy-goto-char)
+
+#+end_src
+
+* Fonts
+#+begin_src emacs-lisp 
+(set-face-attribute 'default nil :font "FiraCode Nerd Font" :height 130)
+
+(use-package all-the-icons
+  :config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)) 
+
+#+end_src
+* Direnv
+#+begin_src emacs-lisp 
+(use-package envrc
+ :config
+ (envrc-global-mode)
+ (with-eval-after-load 'envrc
+  (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)))
+#+end_src
+
