@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running `nixos-help`).
 
 { self, config, pkgs, inputs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -88,7 +87,7 @@
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
-
+  # TODO   
   # Enable sound.
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;

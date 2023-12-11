@@ -158,6 +158,8 @@ When cycling through a directory is thows the file on the right
     (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
     (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
     (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+    (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+    (setq insert-directory-program "ls")
     (setq dired-preview-delay 0.7)
     (setq dired-preview-ignored-extensions-regexp
       (concat "\\."
@@ -169,6 +171,9 @@ When cycling through a directory is thows the file on the right
 
 
 #+end_src
+
+
+
 
 * General Keybindigs
 
@@ -191,7 +196,7 @@ When cycling through a directory is thows the file on the right
     "." '(find-file :wk "Find file")
     "," '(switch-to-buffer :wk "Switch buffer") ; TODO I want this to only switch to workspace buffers
     "<" '(switch-to-buffer :wk "Switch buffer") ; TODO I want this to switch to global buffers
-    "=" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
+    "-" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
   ;; Allow evil to bind this key
@@ -514,11 +519,13 @@ When cycling through a directory is thows the file on the right
 #+end_src
 * Highlight Todo
 #+begin_src emacs-lisp
-
+;; This disables magit diff highlights
+  (define-globalized-minor-mode my-global-hl-todo-mode hl-todo-mode
+    (lambda () (hl-todo-mode 1)))
 ;    
 (use-package hl-todo
-  :hook ((org-mode . hl-todo-mode)
-         (prog-mode . hl-todo-mode))
+  ;; :hook ((org-mode . hl-todo-mode)
+  ;;        (prog-mode . hl-todo-mode))
   :config
   (setq hl-todo-highlight-punctuation ":"
         hl-todo-keyword-faces
@@ -527,8 +534,11 @@ When cycling through a directory is thows the file on the right
           ("HACK"       font-lock-constant-face bold)
           ("REVIEW"     font-lock-keyword-face bold)
           ("NOTE"       success bold)
-          ("DEPRECATED" font-lock-doc-face bold))))
+          ("DEPRECATED" font-lock-doc-face bold)))
+  (my-global-hl-todo-mode 1)
+)
 #+end_src
+  
 
 * Git Time machine
 #+begin_src emacs-lisp
@@ -546,7 +556,7 @@ When cycling through a directory is thows the file on the right
 ;; (use-package doom-themes
 ;;   :after doom-themes
 ;;   :config
-  (load-theme 'doom-Iosvkem t)
+  (load-theme 'doom-gruvbox t)
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :config (setq doom-modeline-height 20
@@ -603,5 +613,37 @@ When cycling through a directory is thows the file on the right
  (envrc-global-mode)
  (with-eval-after-load 'envrc
   (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)))
+#+end_src
+* Projectile
+#+begin_src emacs-lisp 
+(use-package projectile
+  :config
+  (projectile-mode 1))
+#+end_src
+* Perspective
+
+#+begin_src emacs-lisp 
+(use-package perspective
+  :custom
+  ;; NOTE! I have also set 'SCP =' to open the perspective menu.
+  ;; I'm only setting the additional binding because setting it
+  ;; helps suppress an annoying warning message.
+  (persp-mode-prefix-key (kbd "C-c M-p"))
+  :init 
+  (persp-mode)
+  :config
+  ;; Sets a file to write to when we save states
+  (setq persp-state-default-file "~/.config/emacs/sessions"))
+
+;; This will group buffers by persp-name in ibuffer.
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (persp-ibuffer-set-filter-groups)
+            (unless (eq ibuffer-sorting-mode 'alphabetic)
+              (ibuffer-do-sort-by-alphabetic))))
+
+;; Automatically save perspective states to file when Emacs exits.
+(add-hook 'kill-emacs-hook #'persp-state-save)
+
 #+end_src
 

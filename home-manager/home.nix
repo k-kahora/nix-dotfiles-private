@@ -100,7 +100,9 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    SHELL = "${pkgs.fish}/bin/fish";
+    TODO Havin shell set to fish makes projectile not work in emacs
+    Very werild
+    # SHELL = "${pkgs.fish}/bin/fish";
   };
 
   nixpkgs = {

@@ -15,7 +15,7 @@
 
     interactiveShellInit = ''
     ${pkgs.dwt1-shell-color-scripts}/bin/colorscript random
-    fish_vi_key_bindings
+    # fish_vi_key_bindings
     # abbr -a 'nix-shell -p' nix-shell-expand
     # Allows vterm to have proper clear command when using fish
     if [ "$INSIDE_EMACS" = 'vterm' ]
@@ -25,8 +25,9 @@
         end
     end
     # Run fish_key_reader then enter you keybindg to see how to bind a key to something
-    bind --erase \el
-    bind \el forward-char
+    # bind --erase \el
+    # bind \el forward-char
+    fish_vi_key_bindings 2>/dev/null
     '';
     shellAbbrs = {
       ll = "${pkgs.eza}/bin/eza -l --color=always  --group-directories-first";
