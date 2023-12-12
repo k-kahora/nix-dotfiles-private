@@ -27,12 +27,16 @@
   boot.loader.grub.device = "nodev";
   networking.hostName = "Nukeproof";
   networking.networkmanager.enable = true;
-
+  networking.wireless.iwd.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-
+  
+  # Docker 
+  virtualisation.docker.enable = true;
+  users.extraGroups.docker.members = [ "malcolm" ];
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
@@ -149,6 +153,10 @@
 	epkgs.doom-modeline
 	epkgs.nimbus-theme
 	epkgs.ef-themes
+	
+        # Style
+	epkgs.rainbow-delimiters
+
 
         epkgs.use-package
         epkgs.magit # TODO
@@ -177,6 +185,7 @@
         epkgs.which-key
         epkgs.hydra
         epkgs.vertico
+        epkgs.orderless
         epkgs.eshell-toggle
         epkgs.all-the-icons
         epkgs.all-the-icons-dired

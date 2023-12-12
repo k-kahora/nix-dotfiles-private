@@ -118,7 +118,15 @@ TODO Need to make a nice image for the splash screen
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  (setq dashboard-startup-banner "~/.config/emacs/images/dtmacs-logo.png")  ;; use custom image as banner
+  (setq dashboard-startup-banner 'ascii)  ;; use custom image as banner
+  (setq dashboard-banner-ascii (format "
+ _____ __  __    _    __  _____ _   _  ____ 
+| ____|  \/  |  / \   \ \/ /_ _| \ | |/ ___|
+|  _| | |\/| | / _ \   \  / | ||  \| | |  _ 
+| |___| |  | |/ ___ \  /  \ | || |\  | |_| |
+|_____|_|  |_/_/   \_\/_/\_\___|_| \_|\____|"))
+                                            
+
   (setq dashboard-center-content nil) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
                           (agenda . 5 )
@@ -155,8 +163,10 @@ When cycling through a directory is thows the file on the right
   :init (dired-preview-global-mode 1)
   :config 
     (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+    (evil-define-key 'normal dired-mode-map (kbd "SPC") nil)
     (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
     (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+    (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
     (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
     (add-hook 'dired-mode-hook #'dired-hide-details-mode)
     (setq insert-directory-program "ls")
@@ -173,7 +183,16 @@ When cycling through a directory is thows the file on the right
 #+end_src
 
 
+* Regisers
 
+#+begin_src emacs-lisp
+(set-register ?i '(file . "/home/malcolm/nix-dotfiles/home-manager/emacs/config.org"))
+(set-register ?p '(file . "/home/malcolm/Projects"))
+(set-register ?c '(file . "/home/malcolm/nix-dotfiles/nixos/configuration.nix"))
+(set-register ?e '(file . "/home/malcolm/nix-dotfiles/home-manager/emacs/config.el"))
+;; Temorary todo list for <2023-04-09 Sun>
+(set-register ?h '(file . "/home/malcolm/nix-dotfiles/home-manager/home.nix"))
+#+end_src
 
 * General Keybindigs
 
@@ -256,13 +275,12 @@ When cycling through a directory is thows the file on the right
             :wk "Open user-emacs-directory in dired")
     "/ d" '(find-grep-dired :wk "Search for string in files in DIR")
     "/ g" '(counsel-grep-or-swiper :wk "Search for string current file")
-    "/ i" '((lambda () (interactive)
-              (find-file "~/.nix-dotfiles/home-manager/emacs/config.el"))
-            :wk "Open emacs init.el")
-    "/ j" '(counsel-file-jump :wk "Jump to a file below current directory")
+    "/ i" '(insert-file :wk "Insert File")
+    ;; "/ j" '(counsel-file-jump :wk "Jump to a file below current directory")
     "/ l" '(counsel-locate :wk "Locate a file")
-    "/ r" '(counsel-recentf :wk "Find recent files")
+    ;; "/ r" '(counsel-recentf :wk "Find recent files")
     "/ u" '(sudo-edit-find-file :wk "Sudo find file")
+    "/ r" '(jump-to-register :wk "Register jumping")
     "/ U" '(sudo-edit :wk "Sudo edit file"))
 
   (mk/leader-keys
@@ -463,6 +481,10 @@ When cycling through a directory is thows the file on the right
   ;; Tidy shadowed file names
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
+(use-package orderless 
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 * Eshell
 

@@ -47,6 +47,7 @@
     ./scripts.nix
     # ./emacs.nix
     #./eww.nix
+    ./firefox.nix
     ./nvim.nix
     ./lf.nix
     ./tofi.nix
@@ -100,8 +101,8 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    TODO Havin shell set to fish makes projectile not work in emacs
-    Very werild
+    # TODO Havin shell set to fish makes projectile not work in emacs
+    # Very werild
     # SHELL = "${pkgs.fish}/bin/fish";
   };
 

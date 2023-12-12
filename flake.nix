@@ -23,6 +23,12 @@
 
     # Hyprland latest git release
     # hyprland.url = "github:hyprwm/Hyprland";
+    
+    # Firefox extensions
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    };
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
