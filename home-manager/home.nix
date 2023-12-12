@@ -42,6 +42,7 @@
     ./fish.nix
     ./kitty.nix
     ./tmux.nix
+    ./desktop.nix for desktop files for tofi to run
     ./rofi.nix
     ./git.nix
     ./scripts.nix

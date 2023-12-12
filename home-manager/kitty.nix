@@ -12,11 +12,13 @@ shell fish
 # Remove close window confirm
 confirm_os_window_close 0
 
+
+# Run kitty +list-fonts to see all fonts kitty can use
 # Font config
-font_family      jetbrains mono nerd font
-bold_font        jetbrains mono nerd font
-italic_font      jetbrains mono nerd font
-bold_italic_font jetbrains mono nerd font
+font_family      Victor Mono Oblique
+bold_font        Victor Mono Bold 
+italic_font      Victor Mono Italic
+bold_italic_font Victor Mono Bold Italic
 
 font_size 14.0
 

@@ -1,4 +1,4 @@
-{pkgs, config, ...}:
+{pkgs, config, inputs, ...}:
 {
   programs.firefox = {
     enable = true;
@@ -24,15 +24,17 @@
 
       # See all extensions
       # nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"
-      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
-        bitwarden
-        block-origin
-        ponsorblock
-        arkreader
-        ridactyl
-        youtube-shorts-block
-	org-capture
-      ];
 
+      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+         bitwarden
+         ublock-origin
+         sponsorblock
+         darkreader
+         tridactyl
+         youtube-shorts-block
+         org-capture
+       ];
+
+    };
     };
 }

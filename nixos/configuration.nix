@@ -27,8 +27,6 @@
   boot.loader.grub.device = "nodev";
   networking.hostName = "Nukeproof";
   networking.networkmanager.enable = true;
-  networking.wireless.iwd.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -146,6 +144,7 @@
       # Optionally provide extra packages not in the configuration file.
       extraEmacsPackages = epkgs: [
         epkgs.diminish
+        epkgs.ligature
 	epkgs.perspective
 
 	# Themes
@@ -290,6 +289,8 @@
     (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "Ubuntu"]; })
     emacs-all-the-icons-fonts
     jetbrains-mono
+    victor-mono
+    cascadia-code
     
   ];
 
