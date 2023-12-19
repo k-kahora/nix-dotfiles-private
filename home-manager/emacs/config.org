@@ -1,4 +1,5 @@
-
+* Look into the =M-/= keybinding what the hell does it do
+* Learn sed!/awk!/perl?
 
 * Disable use package
 All packages shoud be installed by nix, use package is just there to ensure that there is consistent configuration between packages, use package should never install a packages just configure
@@ -492,7 +493,7 @@ When cycling through a directory is thows the file on the right
 
 (use-package orderless 
   :custom
-  (completion-styles '(orderless basic))
+  (completion-styles '(orderless flex))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 * Eshell
@@ -575,13 +576,13 @@ When cycling through a directory is thows the file on the right
 #+begin_src emacs-lisp
 
 (use-package git-timemachine
-  :after git-timemachine
   :hook (evil-normalize-keymaps . git-timemachine-hook)
   :config
-    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
-    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
+    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-p") 'git-timemachine-show-previous-revision)
+    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-n") 'git-timemachine-show-next-revision)
 )
 #+end_src
+
 * Doom mode line
 #+begin_src emacs-lisp
 ;; (use-package doom-themes

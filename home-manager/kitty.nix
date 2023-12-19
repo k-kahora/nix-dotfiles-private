@@ -15,8 +15,8 @@ confirm_os_window_close 0
 
 # Run kitty +list-fonts to see all fonts kitty can use
 # Font config
-font_family      Victor Mono Oblique
-bold_font        Victor Mono Bold 
+font_family      JetBrains Mono
+bold_font        JetBrains Mono Bold 
 italic_font      Victor Mono Italic
 bold_italic_font Victor Mono Bold Italic
 

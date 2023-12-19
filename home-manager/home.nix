@@ -42,7 +42,7 @@
     ./fish.nix
     ./kitty.nix
     ./tmux.nix
-    ./desktop.nix for desktop files for tofi to run
+    ./desktop.nix 
     ./rofi.nix
     ./git.nix
     ./scripts.nix
@@ -55,9 +55,12 @@
     inputs.nix-colors.homeManagerModules.default
   ];
 
-  colorScheme = inputs.nix-colors.colorSchemes.paraiso;
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
 
   home.packages = with pkgs;[
+  
+    # Pixel are tool
+
     rofi-emoji
     tofi
     pfetch

@@ -121,16 +121,20 @@
     wget
     git
     firefox
-    swww
     unzip
     zip
     direnv
     gtk3 # Needed to use emacs as my run launcher
     ripgrep
     discord
+    # Pixel art
+    aseprite
     
     # Gnome externsions
-    gnomeExtensions.pop-shell
+    # gnomeExtensions.pop-shell was trying this out thought it was trash
+
+    # For my quantom keyboards
+    qmk
 
     killall # Type killall emacs to get rid of all emacs processec
     wpa_supplicant # Need this to connect to eduroam via cmdline
@@ -155,10 +159,14 @@
 	
         # Style
 	epkgs.rainbow-delimiters
+	
+        # Development
+ 	epkgs.lsp-bridge
 
 
         epkgs.use-package
         epkgs.magit # TODO
+	epkgs.git-timemachine
         epkgs.vterm
         epkgs.vterm-toggle
 	

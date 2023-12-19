@@ -38,6 +38,10 @@
       ".." = "cd ..";
       "emax" = "emacs --init-directory=~/nix-dotfiles/home-manager/emacs";
       "nixos-build" = "sudo nixos-rebuild switch --flake ~/nix-dotfiles/#myNixos";
+      
+      # Nix helpful command
+      "edit" = "nix edit nixpkgs#bat";
+
     };
 
   };

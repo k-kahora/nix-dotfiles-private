@@ -1,20 +1,27 @@
 {pkgs, config, ...}:
 { 
-  programs.desktop = {
-
-  enable = true;
-  entries = [
-
-    {
-      name = "Emax Client";
-      exec = "/run/current-system/sw/bin/emacsclient -c";
-      categories = [ "Utility" ];
-    }
-    {
-      name = "Emax Daeomn";
-      exec = "/run/current-system/sw/bin/emacs --init-directory=/home/malcolm/nix-dotfiles/home-manager/emacs --fg-daemon";
-      categories = [ "Utility" ];
-    }
-  ];
-  };
+  home.file.".local/share/applications/emacs-client.desktop".text = ''
+[Desktop Entry]
+Name=Emaxclient
+Exec=emacsclient -c
+Icon=myapp
+Type=Application
+Categories=Utility
+'';
+  home.file.".local/share/applications/emacs.desktop".text = ''
+[Desktop Entry]
+Name=Emax
+Exec=emacs 
+Icon=myapp
+Type=Application
+Categories=Utility
+'';
+  home.file.".local/share/applications/emacs-server.desktop".text = ''
+[Desktop Entry]
+Name=Emaxserver
+Exec=emacs --init-directory=/home/malcolm/nix-dotfiles/home-manager/emacs --fg-daemon
+Icon=myapp
+Type=Application
+Categories=Utility
+'';
 }
