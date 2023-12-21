@@ -63,6 +63,7 @@
 
     rofi-emoji
     tofi
+    just # simpler make file I have a root justfile for nix commands I run alot
     pfetch
     nitch
     wl-clipboard

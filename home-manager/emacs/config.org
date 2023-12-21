@@ -634,7 +634,7 @@ When cycling through a directory is thows the file on the right
 * Fonts
 #+begin_src emacs-lisp 
 ; (font-family-list) ; Run this with C-j in a scratch buffer to see all fonts
-(set-face-attribute 'default nil :font "Cascadia Code" :height 120)
+(set-face-attribute 'default nil :font "JetBrains Mono Bold" :height 120)
 
 
 (use-package all-the-icons

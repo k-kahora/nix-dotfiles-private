@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ self, config, pkgs, inputs, ... }:
+{ self, config, pkgs, inputs, nixos-unstable, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -301,6 +301,32 @@
     cascadia-code
     
   ];
+  
+  # Limit the number of configurations with with NixOS
+  
+  # boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.grub.configurationLimit = 20;
+
+  # Perform garbage collection weekly to maintain low disk usage
+  #nix.gc = {
+  #  automatic = true;
+  #  dates = "weekly";
+  #  options = "--delete-older-than 1w";
+  #};
+
+  # Optimize storage
+  # You can also manually optimize the store via:
+  #    nix-store --optimise
+  # Refer to the following link for more details:
+  # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
+  # nix.settings.auto-optimise-store = true;
+  
+  # If you want nix shell and nix run to use the same nixos as this flake 
+  # nix.registry.nixpkgs.flake = nixos-unstable;
+  # Channels are never used we use flakes
+  # nix.channel.enable = false;
+  # With nix channel disabled you no longer have acess to the $NIX_PATH
+  # This means you must use things such as nix reply -f flake:nixpkgs
 
 }
 
