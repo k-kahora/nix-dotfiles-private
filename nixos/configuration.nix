@@ -122,6 +122,8 @@
     git
     firefox
     unzip
+    gcc # This is installed globaly as temp fix to compile treesitter grammars
+    	# Have not packaged the grammars myself NOTE good idea to do that
     zip
     direnv
     gtk3 # Needed to use emacs as my run launcher
@@ -162,12 +164,14 @@
 	
         # Development
  	epkgs.lsp-bridge
-
+    	epkgs.lsp-mode
+    	epkgs.tree-sitter-langs
+    	epkgs.tree-sitter
 
         epkgs.use-package
         epkgs.magit # TODO
 	epkgs.git-timemachine
-        epkgs.vterm
+        epkgs.eat
         epkgs.vterm-toggle
 	
         # Evil mode
@@ -177,6 +181,7 @@
 	    epkgs.evil-goggles
 
         epkgs.avy
+
 
         epkgs.rainbow-delimiters
         epkgs.org-roam # TODO

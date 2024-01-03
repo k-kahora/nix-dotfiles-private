@@ -192,7 +192,7 @@ decoration {
 
     # Active opacity
     active_opacity = 0.9
-    # inactive_opacity = 0.75
+    inactive_opacity = 0.75
     fullscreen_opacity = 1.0
 
     blur {
@@ -210,7 +210,7 @@ decoration {
     shadow_render_power = 1
     col.shadow = rgba(1a1a1aee)
 
-    dim_inactive = true
+    dim_inactive = false
     # screen_shader = path to custom screen shader
 }
 
