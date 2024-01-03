@@ -137,6 +137,10 @@
 
     # For my quantom keyboards
     qmk
+    
+    
+    # bought font called comic code
+    (callPackage ./comic-code.nix {})
 
     killall # Type killall emacs to get rid of all emacs processec
     wpa_supplicant # Need this to connect to eduroam via cmdline
