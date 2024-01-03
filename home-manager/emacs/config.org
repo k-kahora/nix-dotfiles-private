@@ -70,7 +70,7 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 
 * Fonts faces
 
-#+begin_src emacs-list
+#+begin_src emacs-lisp
 
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
@@ -96,8 +96,8 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
 ;; are not right unless I also add this method of setting the default font.
 ;; You can use the lisp expression (font-family-list) to see all fonts listed out
-(add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font Mono"))
-(set-frame-font "Comic Code" nit t)
+(add-to-list 'default-frame-alist '(font . "Comic Code Ligatures"))
+;; (set-frame-font "Comic Code Ligatures" nit t)
 
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)

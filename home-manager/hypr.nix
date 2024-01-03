@@ -38,8 +38,6 @@ let
     waybar &
     nm-applet --indicator &
     dunst &
-    swww init &
-    swww img /home/malcolm/Documents/Wallpapers/Adventure-Time-Christmas.jpg --resize fit &
     '';
   };
 

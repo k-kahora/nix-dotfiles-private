@@ -242,11 +242,12 @@
        "Pictures"
        "nix-dotfiles"
        
-       # STATEFUL
+       # STATEFUL 
        ".config/doom" # This is temporary while I figure out what I need to do make a custom emacs    
        ".config/emacs" # ^
        #".emacs.d"
-       # STATEFUL
+       # STATEFUL ^
+
 
        "Projects"
        "clones"
@@ -256,7 +257,7 @@
       # When doing files in the home directory set them up so the 
       # user is <user> it defaults to root
       # files = [".emacs-profiles.el"];
-      files = [{file = ".local/share/fish/fish_history"; parentDirectory = {mode = "0777";};}];
+      files = [{file = ".local/share/fish/fish_history"; }];
     };
   };
   programs.hyprland.enable = true;
