@@ -171,6 +171,9 @@
     	epkgs.lsp-mode
     	epkgs.tree-sitter-langs
     	epkgs.tree-sitter
+	epkgs.company
+	# Ocaml dev
+    	epkgs.tuareg
 
         epkgs.use-package
         epkgs.magit # TODO
@@ -239,8 +242,12 @@
       directories = [
        "Documents"
        "Desktop"
+       "org-roam"
        "Pictures"
        "nix-dotfiles"
+       
+       # Fish history
+       ".local/share/fish/fish_history"
        
        # STATEFUL 
        ".config/doom" # This is temporary while I figure out what I need to do make a custom emacs    
@@ -255,9 +262,12 @@
       ];
       # This is temporary until I set up emacs on home manager
       # When doing files in the home directory set them up so the 
+      
+      # Using the file attribute does not seem to work.
       # user is <user> it defaults to root
       # files = [".emacs-profiles.el"];
-      files = [{file = ".local/share/fish/fish_history"; }];
+      # files = [{file = ".local/share/fish/fish_history"; }];
+
     };
   };
   programs.hyprland.enable = true;

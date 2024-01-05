@@ -446,6 +446,11 @@ When cycling through a directory is thows the file on the right
 (tool-bar-mode -1)           ;; Disable the tool bar
 (setq org-edit-src-content-indentation 0) ;; Set src block automatic indent to 0 instead of 2.
 
+;; Using things like Async shell you can now use C-p to go to the last command
+(define-key minibuffer-local-map (kbd "C-p") 'previous-history-element)
+(define-key minibuffer-local-map (kbd "C-n") 'next-history-element)
+
+
 #+end_src
 * Hydra
 #+begin_src emacs-lisp
@@ -599,16 +604,6 @@ When cycling through a directory is thows the file on the right
                 doom-modeline-perp-name t
                 doom-modeline-persp-icon t))
 #+end_src
-* Treesitter
-
-
-#+begin_src emacs-lisp
-
-(setq treesit-language-source-alist 
-  '((ocaml "https://github.com/semgrep/ocaml-tree-sitter-core")))
-
-
-#+end_src
 * Avy
 
 #+begin_src emacs-lisp 
@@ -708,7 +703,11 @@ When cycling through a directory is thows the file on the right
 
 #+end_src
 
+
+
 * Lsp and treesitter
+[[https://github.com/emacs-tree-sitter/tree-sitter-langs/releases][Precompiled Binarys]] list of all the grammars youed ever need precompiled
+put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 
 #+begin_src emacs-lisp 
 (use-package treesit
@@ -734,6 +733,11 @@ When cycling through a directory is thows the file on the right
      (sql . ("https://github.com/m-novikov/tree-sitter-sql"))
      (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
      (zig . ("https://github.com/GrayJack/tree-sitter-zig"))))
+
+  (setq treesit-language-source-alist
+   '(
+     (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" "master" "src"))
+     ))
   :config
   (defun nf/treesit-install-all-languages ()
     "Install all languages specified by `treesit-language-source-alist'."
@@ -743,7 +747,27 @@ When cycling through a directory is thows the file on the right
 	      (treesit-install-language-grammar lang)
 	      (message "`%s' parser was installed." lang)
 	      (sit-for 0.75)))))
-#+end_src
 
-#+RESULTS:
-: t
+(add-hook 'tuareg-mode-hook #'tree-sitter-mode)
+(add-hook 'tuareg-mode-hook #'tree-sitter-hl-mode)
+#+end_src
+** Merlin
+
+#+begin_src emacs-lisp
+(use-package merlin
+  :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  (add-hook 'merlin-mode-hook #'company-mode)
+  ;; we're using flycheck instead
+  (setq merlin-error-after-save nil))
+
+#+end_src
+** Company
+
+* Org-roam
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :init (org-roam-db-autosync-mode))
+#+end_src
