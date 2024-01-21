@@ -114,7 +114,7 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-exec-once = bash ${mk-start}/bin/start
+# exec-once = bash ${mk-start}/bin/start
 exec-once = wl-paste --type text --watch cliphist store
 
 # Source a file (multi-file configs)

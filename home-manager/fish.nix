@@ -43,7 +43,7 @@
       "edit" = "nix edit nixpkgs#bat";
       
       # fire command to make a directory on the tmp filesystem (On Ram so it gets reset)
-      "burner" = "cd \"\$(mdtemp -d)\"";
+      "burner" = "cd \"\$(mktemp -d)\"";
 
 
 

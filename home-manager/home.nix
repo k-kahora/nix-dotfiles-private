@@ -63,7 +63,8 @@
 
     rofi-emoji
     tofi
-    just # simpler make file I have a root justfile for nix commands I run alot
+    # just # simpler make file I have a root justfile for nix commands I run alot
+    # removed just for use in system wide config in favor of fish aliases -> there are alot cleaner
     pfetch
     nitch
     wl-clipboard

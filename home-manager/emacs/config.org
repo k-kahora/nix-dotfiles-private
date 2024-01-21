@@ -27,6 +27,25 @@ All packages shoud be installed by nix, use package is just there to ensure that
 (evil-commentary-mode) ;; hit gc on a region to comment it
 (evil-goggles-mode) ;; shows what you command did
 
+(setq evil-want-minibuffer t)
+
+;; Chat gpt code to save the last thing entered into async shell command
+(defvar my/last-async-command ""
+  "The last asynchronous command executed.")
+
+(defun my/save-last-async-command (command &rest r)
+  "Save the last asynchronous command executed."
+  (setq my/last-async-command command))
+
+(advice-add 'async-shell-command :before 'my/save-last-async-command)
+
+(defun my/async-shell-command-with-last (command &optional output-buffer error-buffer)
+  "Run an asynchronous shell command with the last command as default."
+  (interactive (list (read-shell-command "Async shell command: " my/last-async-command)))
+  (async-shell-command command output-buffer error-buffer))
+
+(global-set-key (kbd "M-&") 'my/async-shell-command-with-last)
+
 (use-package evil-collection
   :after evil
   :config
@@ -286,6 +305,7 @@ When cycling through a directory is thows the file on the right
     "/ e" '((lambda () (interactive)
               (dired "~/nix-dotfiles/home-manager/emacs/config.org"))
             :wk "Open user-emacs-directory in dired")
+    "/ a" '(save-buffer :wk "Save file")
     "/ d" '(find-grep-dired :wk "Search for string in files in DIR")
     "/ g" '(counsel-grep-or-swiper :wk "Search for string current file")
     "/ i" '(insert-file :wk "Insert File")
@@ -760,7 +780,18 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
   (add-hook 'tuareg-mode-hook #'merlin-mode)
   (add-hook 'merlin-mode-hook #'company-mode)
   ;; we're using flycheck instead
-  (setq merlin-error-after-save nil))
+  (setq merlin-error-after-save nil)
+  :bind (:map merlin-mode-map
+("C-c C-u"  . merlin-use)
+("C-c C-. C-r"  . merlin-restart-process)))
+
+
+(use-package merlin-eldoc 
+  :hook ((tuareg-mode) . merlin-eldoc-setup))
+
+(use-package flycheck-ocaml
+  :config 
+  (flycheck-ocaml-setup))
 
 #+end_src
 ** Company
@@ -770,4 +801,12 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 #+begin_src emacs-lisp
 (use-package org-roam
   :init (org-roam-db-autosync-mode))
+#+end_src
+* Makedown mode
+#+begin_src emacs-lisp
+
+(use-package markdown-mode
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+
 #+end_src
