@@ -871,6 +871,14 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 ("C-c C-u"  . merlin-use)
 ("C-c C-. C-r"  . merlin-restart-process)))
 
+;; Function to call ocamlformat
+(defun ocamlformat ()
+  (when (and (executable-find "ocamlformat") (eq major-mode 'tuareg-mode))
+    (shell-command-to-string (format "ocamlformat -i %s --enable-outside-detected-project" buffer-file-name))
+    (revert-buffer t t t)))
+
+;; Add ocamlformat hook to Tuareg mode
+(add-hook 'before-save-hook 'ocamlformat)
 
 (use-package merlin-eldoc 
   :hook ((tuareg-mode) . merlin-eldoc-setup))
