@@ -29,6 +29,17 @@
   networking.networkmanager.enable = true;
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
+
+  # networking.wireless = {
+  #   enable = true;
+  #   interfaces = ["wlp3s0"];
+  #   networks = {
+  #     eduroam = {
+  #       psk = "huluPierre&6";
+  #     };
+  #   };
+  # };
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   
@@ -117,33 +128,32 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    # Tools
+    vim 
     wget
     git
-    firefox
     unzip
-    gcc # This is installed globaly as temp fix to compile treesitter grammars
-    	# Have not packaged the grammars myself NOTE good idea to do that
-    zip
-    direnv
-    gtk3 # Needed to use emacs as my run launcher
     ripgrep
-    discord
-    # Pixel art
-    aseprite
-    
-    # Gnome externsions
-    # gnomeExtensions.pop-shell was trying this out thought it was trash
-
-    # For my quantom keyboards
-    qmk
-    
-    
-    # bought font called comic code
-    (callPackage ./comic-code.nix {})
-
+    direnv
+    zip
+    gtk3 # Needed to use emacs as my run launcher
     killall # Type killall emacs to get rid of all emacs processec
     wpa_supplicant # Need this to connect to eduroam via cmdline
+    gcc # This is installed globaly as temp fix to compile treesitter grammars
+    	# Have not packaged the grammars myself NOTE good idea to do that
+    # Browsers
+    firefox
+    google-chrome # For DRM content such a crunchy roll and hbo max
+    discord
+    # Art
+    aseprite
+    krita
+    # keyboards
+    qmk
+    # Fonts
+    (callPackage ./comic-code.nix {})
+
+    # Emacs
     (pkgs.emacsWithPackagesFromUsePackage {
       package = pkgs.emacs-git;  # replace with pkgs.emacsPgtk, or another version if desired.
       config = ./config.org; # Org-Babel configs also supported
@@ -208,6 +218,7 @@
         epkgs.which-key
         epkgs.hydra
         epkgs.vertico
+        epkgs.vertico-posframe
 	# epkgs.markdown-mode alread build into emacs 30
         epkgs.orderless
         epkgs.eshell-toggle
@@ -215,9 +226,6 @@
         epkgs.all-the-icons-dired
         epkgs.eshell-syntax-highlighting
       ];
-
-      # alwaysEnsure = true;
-
       # Optionally override derivations.
       override = epkgs: epkgs // {
         somePackage = epkgs.melpaPackages.somePackage.overrideAttrs(old: {

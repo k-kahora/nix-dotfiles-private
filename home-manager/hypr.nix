@@ -36,8 +36,15 @@ let
     runtimeInputs = [pkgs.waybar pkgs.dunst pkgs.networkmanagerapplet ];
     text = ''
     waybar &
+    sleep 1
     nm-applet --indicator &
+    sleep 1
     dunst &
+    sleep 1
+    swww init &
+    sleep 1
+    emacs --init-directory=/home/malcolm/nix-dotfiles/home-manager/emacs --fg-daemon
+    sleep 1
     '';
   };
 
@@ -114,7 +121,7 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-# exec-once = bash ${mk-start}/bin/start
+exec-once = bash ${mk-start}/bin/start
 exec-once = wl-paste --type text --watch cliphist store
 
 # Source a file (multi-file configs)
