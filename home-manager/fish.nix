@@ -18,6 +18,7 @@
     # fish_vi_key_bindings
     # abbr -a 'nix-shell -p' nix-shell-expand
     # Allows vterm to have proper clear command when using fish
+    set fish_greeting
     if [ "$INSIDE_EMACS" = 'vterm' ]
         function clear
             vterm_printf "51;Evterm-clear-scrollback";

@@ -175,11 +175,13 @@
 	
         # Style
 	epkgs.rainbow-delimiters
+	epkgs.engrave-faces
 	
         # Development
  	epkgs.lsp-bridge
     	epkgs.lsp-mode
     	epkgs.tree-sitter-langs
+	epkgs.ocamlformat
     	epkgs.tree-sitter
 	epkgs.company
 	epkgs.chatgpt-shell
@@ -189,17 +191,19 @@
 	epkgs.merlin-eldoc
 	epkgs.flycheck-ocaml
 
+	# Sane
         epkgs.use-package
         epkgs.magit # TODO
 	epkgs.git-timemachine
         epkgs.eat
         epkgs.vterm-toggle
+	epkgs.pdf-tools
 	
         # Evil mode
         epkgs.evil
-	    epkgs.evil-commentary
+	epkgs.evil-commentary
         epkgs.evil-collection
-	    epkgs.evil-goggles
+	epkgs.evil-goggles
 
         epkgs.avy # Unbeliavle movement great avy article
 	# https://karthinks.com/software/avy-can-do-anything/
@@ -213,7 +217,7 @@
 	epkgs.envrc
         epkgs.dired-preview # TODO
         epkgs.elfeed # TODO
-	    epkgs.hl-todo
+	epkgs.hl-todo
         epkgs.general
         epkgs.which-key
         epkgs.hydra
@@ -243,6 +247,10 @@
   environment.persistence."/nix/persist" = {
     directories = [
       "/etc/nixos"
+      "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
     ];
     files = [

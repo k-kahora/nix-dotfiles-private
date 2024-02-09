@@ -77,6 +77,11 @@ All packages shoud be installed by nix, use package is just there to ensure that
   (define-key evil-motion-state-map (kbd "TAB") nil))
 ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
+
+;; PDFs
+
+
+
 #+end_src
 * Zooming
 #+begin_src emacs-lisp :angle yes
@@ -140,7 +145,7 @@ This package implements hiding or abbreviation of the modeline displays (lighter
 (use-package rainbow-delimiters
   :config
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'org-mode-hook #'rainbow-delimiters-mode)
+;; (add-hook 'org-mode-hook #'rainbow-delimiters-mode) ;; you dont need this mode as src blocks are prog mode
 )
 
 
@@ -745,7 +750,7 @@ When cycling through a directory is thows the file on the right
 #+begin_src emacs-lisp 
 (use-package projectile
   :config
-  (projectile-mode 1))
+  (projectile-mode 1)
 
   ;; TODO Figure out what all this chat gpt code does see if you can clean it up
 ;; (defvar my-last-async-command nil
@@ -872,13 +877,9 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 ("C-c C-. C-r"  . merlin-restart-process)))
 
 ;; Function to call ocamlformat
-(defun ocamlformat ()
-  (when (and (executable-find "ocamlformat") (eq major-mode 'tuareg-mode))
-    (shell-command-to-string (format "ocamlformat -i %s --enable-outside-detected-project" buffer-file-name))
-    (revert-buffer t t t)))
 
-;; Add ocamlformat hook to Tuareg mode
-(add-hook 'before-save-hook 'ocamlformat)
+(add-hook 'tuareg-mode-hook (lambda ()
+                              (add-hook 'before-save-hook 'ocamlformat-before-save)))
 
 (use-package merlin-eldoc 
   :hook ((tuareg-mode) . merlin-eldoc-setup))
@@ -890,12 +891,23 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 #+end_src
 ** Company
 
+* Org mode
+#+begin_src emacs-lisp 
+(use-package org
+  :config (setq org-latex-src-block-backend 'engraved)
+)
+
+
+#+end_src
 * Org-babel
 #+begin_src emacs-lisp
 (require 'org-tempo) 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((python . t)))
+ '((python . t)
+ (shell . t)))
+
+(setq org-confirm-babel-evaluate nil)
 #+end_src
 * Org-roam
 
@@ -910,4 +922,18 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown"))
 
+#+end_src
+
+* PDF tools
+#+begin_src emacs-lisp
+(pdf-tools-install)
+
+;; TODO Turn off evil mode in pdf bufferj
+;; (defun adjust-evil-mode-for-pdfs ()
+;;   "Temporarily suspend Evil mode in PDF buffers, restore upon exit."
+;;   (if (eq major-mode 'pdf-view-mode)
+;;       (evil-emacs-state) ;; Switch to Emacs state in PDF buffers
+;;     (unless (eq evil-state 'emacs)
+;;       (evil-normal-state)))) ;; Return to previous Evil state if not in Emacs state
+;; (add-hook 'buffer-list-update-hook 'adjust-evil-mode-for-pdfs)
 #+end_src
