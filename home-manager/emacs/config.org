@@ -937,3 +937,20 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 ;;       (evil-normal-state)))) ;; Return to previous Evil state if not in Emacs state
 ;; (add-hook 'buffer-list-update-hook 'adjust-evil-mode-for-pdfs)
 #+end_src
+
+* Nix mode
+#+begin_src emacs-lisp
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
+#+end_src
+
+* Ansi colors in comp
+#+begin_src emacs-lisp
+(use-package ansi-color
+  (setq ansi-color-for-comint-mode t)
+  (setenv "TERM" "xterm-256color") ;; needed to make colors appear in compilation buffer
+:hook (compilation-filter . ansi-color-compilation-filter))
+#+end_src
+
+

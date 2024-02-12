@@ -93,8 +93,12 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
-    # package = inputs.hyprland.packages.${pkgs.system}.hyprland; # Latest hyprland
-    package = pkgs.hyprland;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland; # Latest hyprland
+    # package = pkgs.hyprland;
+    plugins = [
+      inputs.hyprland-plugins.packages."${pkgs.system}".borders-plus-plus
+      inputs.hyprland-plugins.packages."${pkgs.system}".hyprtrails
+    ];
     extraConfig = ''
     
 ########################################################################################
@@ -132,7 +136,7 @@ env = XCURSOR_SIZE,24
 
 # forec the hyprchan
 misc {
-  force_hypr_chan = false
+  # force_hypr_chan = false # Removed in the latest update
   disable_hyprland_logo = false
   animate_manual_resizes = true
   animate_mouse_windowdragging = true
@@ -178,16 +182,12 @@ general {
     layout = dwindle
 }
 
-# group {
-#     col.group_border = rgb(${config.colorScheme.colors.base0F}) rgb(${config.colorScheme.colors.base0F}) 45deg
-#     col.group_border_active = rgb(${config.colorScheme.colors.base0D}) rgb(${config.colorScheme.colors.base0D}) 45deg
-#
-#     groupbar {
-#       col.active = rgb(${config.colorScheme.colors.base0A}) rgb(${config.colorScheme.colors.base0A}) 45deg
-#       col.inactive = rgb(${config.colorScheme.colors.base06}) rgb(${config.colorScheme.colors.base06}) 45deg
-#     }
-#
-# }
+group {
+    groupbar {
+      col.active = rgb(${config.colorScheme.colors.base0A}) rgb(${config.colorScheme.colors.base0A}) 45deg
+      col.inactive = rgb(${config.colorScheme.colors.base06}) rgb(${config.colorScheme.colors.base06}) 45deg
+    }
+}
 
 decoration {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -196,8 +196,8 @@ decoration {
     # anti aliasing on edges
 
     # Active opacity
-    active_opacity = 0.9
-    inactive_opacity = 0.75
+    active_opacity = 1.0
+    inactive_opacity = 0.9
     fullscreen_opacity = 1.0
 
     blur {
@@ -270,6 +270,11 @@ windowrulev2 = float,class:Dolphin,title:Dolphin
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
 
 windowrulev2 = float,class:emacs-run-launcher,title:emacs-run-launcher
+
+# Kitty window rule
+windowrule=float,^(kitty)$
+windowrule=move 70% 5%,^(kitty)$
+windowrule=size 20% 40%,^(kitty)$
 
 binds {
 
@@ -364,6 +369,24 @@ bind = $mainMod, mouse_up, workspace, e-1
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
 
+plugin {
+    borders-plus-plus {
+        add_borders = 3 # 0 - 9
+
+        # you can add up to 9 borders
+        col.border_1 = rgb(98971A)
+        col.border_2 = rgb(d65d0E)
+        col.border_3 = rgb(B16286)
+
+        # -1 means "default" as in the one defined in general:border_size
+        border_size_1 = 2
+        border_size_2 = 5
+        border_size_3 = 2
+
+        # makes outer edges match rounding of the parent. Turn on / off to better understand. Default = on.
+        natural_rounding = yes
+    }
+}
 
 '';
   };

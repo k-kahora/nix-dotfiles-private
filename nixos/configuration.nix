@@ -184,7 +184,9 @@
 	epkgs.ocamlformat
     	epkgs.tree-sitter
 	epkgs.company
-	epkgs.chatgpt-shell
+	epkgs.chatgpt-shell # need api tokens 
+	epkgs.nix-mode
+
 	# Ocaml dev
     	epkgs.tuareg
 	epkgs.merlin
@@ -292,6 +294,8 @@
     };
   };
   programs.hyprland.enable = true;
+  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+
   programs.nm-applet.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

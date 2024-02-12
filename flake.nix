@@ -22,7 +22,13 @@
     impermanence.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprland latest git release
-    # hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    # Hyprland plugins
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
     
     # Firefox extensions
     firefox-addons = {
