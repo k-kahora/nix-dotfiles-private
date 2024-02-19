@@ -166,13 +166,10 @@ TODO Need to make a nice image for the splash screen
   (setq dashboard-set-file-icons t)
   (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  (setq dashboard-startup-banner 'ascii)  ;; use custom image as banner
-  (setq dashboard-banner-ascii (format "
- _____ __  __    _    __  _____ _   _  ____ 
-| ____|  \/  |  / \   \ \/ /_ _| \ | |/ ___|
-|  _| | |\/| | / _ \   \  / | ||  \| | |  _ 
-| |___| |  | |/ ___ \  /  \ | || |\  | |_| |
-|_____|_|  |_/_/   \_\/_/\_\___|_| \_|\____|"))
+  ;; (setq dashboard-startup-banner (concat default-directory "emacs.png") )  ;; use custom image as banner
+  (setq dashboard-startup-banner "/home/malcolm/nix-dotfiles/home-manager/emacs/emacs.png" )  ;; use custom image as banner
+
+  
                                             
 
   (setq dashboard-center-content nil) ;; set to 't' for centered content
@@ -948,9 +945,38 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 * Ansi colors in comp
 #+begin_src emacs-lisp
 (use-package ansi-color
+  :config
   (setq ansi-color-for-comint-mode t)
   (setenv "TERM" "xterm-256color") ;; needed to make colors appear in compilation buffer
 :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
 
 
+
+* eglot
+#+begin_src emacs-lisp
+(use-package eglot
+:hook ((python . eglot-ensure)
+       (js-mode . elgot-ensure)
+       (html-mode . elgot-ensure))
+:config
+  (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
+
+  ;; JavaScript - Assuming you're using a language server like js-ts-ls or similar
+  (add-to-list 'eglot-server-programs '(js-mode . ("typescript-language-server" "--stdio")))
+  
+  ;; HTML - Using vscode-html-languageserver
+  (add-to-list 'eglot-server-programs '(html-mode . ("vscode-html-languageserver" "--stdio"))))
+#+end_src
+
+* company
+#+begin_src emacs-lisp
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode 1) ; Enable Company mode globally
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0)) ; Adjust as per your preference
+
+
+#+end_src

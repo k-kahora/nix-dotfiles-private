@@ -68,6 +68,8 @@
     pfetch
     nitch
     wl-clipboard
+    
+    gh # github cli tool // pretty solid tool I mess with it
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

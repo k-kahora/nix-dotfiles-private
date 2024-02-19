@@ -1,2 +1,3 @@
 *~
-/home-manager/emacs/
+/home-manager/emacs/*
+!/home-manager/emacs/emacs.png
