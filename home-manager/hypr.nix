@@ -1,6 +1,17 @@
 {config, pkgs, inputs, ...}:
 let
 
+  disable-laptop-screen = pkgs.writeShellApplication {
+    name = "disable-laptop";
+    text = ''
+    external_monitors=$(hyprctl monitors all | grep -m 1 "eDP-1" | awk '{print $2}')
+    echo $external_monitors
+    if [ -n "$external_monitors" ]; then
+       hyprctl keyword monitor $external_monitors,disable
+    fi
+    '';
+
+  };
   mk-decrease-border = pkgs.writeShellApplication {
     name = "border-down";
     text = ''
@@ -127,6 +138,8 @@ monitor=,preferred,auto,auto
 # Execute your favorite apps at launch
 exec-once = bash ${mk-start}/bin/start
 exec-once = wl-paste --type text --watch cliphist store
+
+exec-once = bash ${disable-laptop-screen}/bin/disable-laptop # When I plug my monitor in I do not need to look at my laptop
 
 # Source a file (multi-file configs)
 # source = ~/.config/hypr/myColors.conf
