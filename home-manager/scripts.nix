@@ -13,6 +13,16 @@
   })
 
 
+  # easy tcnj vpn
+  (writeShellApplication {
+
+    name = "tcnj-vpn";
+    runtimeInputs = [openconnect];
+    text = ''
+         sudo openconnect --protocol=gp vpn-gw-ft.tcnj.edu --quiet --user=kahoram1
+         '';
+  })
+
   # precise controlling of inputs
   # Updates the lock attribute for the input you give it
   (writeShellApplication {

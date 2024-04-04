@@ -167,7 +167,8 @@ TODO Need to make a nice image for the splash screen
   (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   ;; (setq dashboard-startup-banner (concat default-directory "emacs.png") )  ;; use custom image as banner
-  (setq dashboard-startup-banner "/home/malcolm/nix-dotfiles/home-manager/emacs/emacs.png" )  ;; use custom image as banner
+  ;; (setq dashboard-startup-banner "/home/malcolm/nix-dotfiles/home-manager/emacs/emacs.png" )  ;; use custom image as banner
+  (setq dashboard-startup-banner "/home/malcolm/Downloads/emacs-dash.svg" )  ;; use custom image as banner
 
   
                                             
@@ -184,6 +185,9 @@ TODO Need to make a nice image for the splash screen
   :config
   (dashboard-setup-startup-hook))
 #+end_src
+
+#+RESULTS:
+: t
 
 * Dired open
 Opens third party application when I want to open a file from dired like a mp4 or an image
@@ -232,15 +236,17 @@ When cycling through a directory is thows the file on the right
 * Regisers
 
 #+begin_src emacs-lisp
+(set-register ?D '(file . "/home/malcolm/Documents"))
+(set-register ?d '(file . "/home/malcolm/Downloads"))
+(set-register ?c '(file . "/home/malcolm/clones"))
 (set-register ?i '(file . "/home/malcolm/nix-dotfiles/home-manager/emacs/config.org"))
-(set-register ?P '(file . "/home/malcolm/Pictures/Screenshots/"))
-(set-register ?p '(file . "/home/malcolm/Projects"))
+(set-register ?S '(file . "/home/malcolm/Pictures/Screenshots/"))
+(set-register ?P '(file . "/home/malcolm/Projects"))
 (set-register ?c '(file . "/home/malcolm/nix-dotfiles/nixos/configuration.nix"))
 (set-register ?e '(file . "/home/malcolm/nix-dotfiles/home-manager/emacs/config.el"))
 ;; Temorary todo list for <2023-04-09 Sun>
 (set-register ?h '(file . "/home/malcolm/nix-dotfiles/home-manager/home.nix"))
 #+end_src
-
 * General Keybindigs
 
 #+begin_src emacs-lisp
@@ -394,6 +400,7 @@ When cycling through a directory is thows the file on the right
     "m I" '(org-toggle-inline-images :wk "Org toggle inline images")
     "m t" '(org-todo :wk "Org todo")
     "m B" '(org-babel-tangle :wk "Org babel tangle")
+    "m E" '(org-babel-execute-buffer :wk "Executer all src blocks in buffer")
     "m T" '(org-todo-list :wk "Org todo list"))
 
   (mk/leader-keys
@@ -415,6 +422,7 @@ When cycling through a directory is thows the file on the right
   ;; set for us, so no need to specify each individually.
   (mk/leader-keys
     "p" '(projectile-command-map :wk "Projectile"))
+    ;; "p ." '(projectile-find-file :wk "Projectile find file"))
 
   (mk/leader-keys
     "s" '(:ignore t :wk "Search")
@@ -669,7 +677,7 @@ When cycling through a directory is thows the file on the right
 ;; (use-package doom-themes
 ;;   :after doom-themes
 ;;   :config
-  (load-theme 'doom-gruvbox t)
+  (load-theme 'doom-palenight t)
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :config (setq doom-modeline-height 20
@@ -732,7 +740,7 @@ When cycling through a directory is thows the file on the right
                                       "__" "~~" "~~>" "~>" "~-" "~@" "$>" "^=" "]#"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
-  (global-ligature-mode t))
+  (global-ligature-mode 1))
 
 #+end_src
 * Direnv
@@ -906,6 +914,11 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 
 (setq org-confirm-babel-evaluate nil)
 #+end_src
+* Org drill
+#+begin_src emacs-lisp
+(use-package org-drill)
+
+#+end_src
 * Org-roam
 
 #+begin_src emacs-lisp
@@ -942,6 +955,7 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 
 #+end_src
 
+
 * Ansi colors in comp
 #+begin_src emacs-lisp
 (use-package ansi-color
@@ -950,7 +964,6 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
   (setenv "TERM" "xterm-256color") ;; needed to make colors appear in compilation buffer
 :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
-
 
 
 * eglot
@@ -967,6 +980,11 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
   
   ;; HTML - Using vscode-html-languageserver
   (add-to-list 'eglot-server-programs '(html-mode . ("vscode-html-languageserver" "--stdio"))))
+;; Python auto formatting
+(use-package python-black
+  :demand t
+  :after python
+  :hook (python-mode . python-black-on-save-mode-enable-dwim))
 #+end_src
 
 * company

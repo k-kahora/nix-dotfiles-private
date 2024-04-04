@@ -21,7 +21,7 @@
   fileSystems."/home/malcolm" =
     { device = "none";
       fsType = "tmpfs";
-      options = [ "size=2G" "mode=777" ];
+      options = [ "size=8G" "mode=777" ];
     };
 
   fileSystems."/boot" =

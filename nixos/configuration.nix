@@ -178,6 +178,7 @@
 	epkgs.engrave-faces
 	
         # Development
+ 	epkgs.python-black # this package is stupid for what you do delete this when you can make your own
  	epkgs.lsp-bridge
     	epkgs.lsp-mode
     	epkgs.tree-sitter-langs
@@ -212,6 +213,7 @@
 
         epkgs.rainbow-delimiters
         epkgs.org-roam # TODO
+        epkgs.org-drill # TODO
         epkgs.company
         epkgs.dashboard # TODO
         epkgs.projectile # TODO
@@ -264,21 +266,16 @@
     users."malcolm" = {
       directories = [
        "Documents"
-       "Desktop"
        "org-roam"
        "Pictures"
        "nix-dotfiles"
-       
        # Fish history
        ".local/share/fish"
-       
        # STATEFUL 
        ".config/doom" # This is temporary while I figure out what I need to do make a custom emacs    
        ".config/emacs" # ^
        #".emacs.d"
        # STATEFUL ^
-
-
        "Projects"
        "clones"
        { directory = ".ssh"; mode = "0700"; }

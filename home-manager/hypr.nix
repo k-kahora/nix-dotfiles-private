@@ -1,13 +1,21 @@
 {config, pkgs, inputs, ...}:
 let
 
+
+  disable-animation = pkgs.writeShellApplication {
+    name = "disable-animations";
+    text = ''
+hyprctl keyword animations:enabled no
+    '';
+
+  };
   disable-laptop-screen = pkgs.writeShellApplication {
     name = "disable-laptop";
     text = ''
-    external_monitors=$(hyprctl monitors all | grep -m 1 "eDP-1" | awk '{print $2}')
-    echo $external_monitors
+    external_monitors=$(hyprctl monitors all | grep -m 1 "DP-3" | awk '{print $2}')
+    laptop=$(hyprctl monitors all | grep -m 1 "eDP-1" | awk '{print $2}')
     if [ -n "$external_monitors" ]; then
-       hyprctl keyword monitor $external_monitors,disable
+       hyprctl keyword monitor "$laptop",disable
     fi
     '';
 
@@ -284,10 +292,6 @@ windowrulev2 = float,class:Dolphin,title:Dolphin
 
 windowrulev2 = float,class:emacs-run-launcher,title:emacs-run-launcher
 
-# Kitty window rule
-windowrule=float,^(kitty)$
-windowrule=move 70% 5%,^(kitty)$
-windowrule=size 20% 40%,^(kitty)$
 
 binds {
 
@@ -299,7 +303,9 @@ binds {
 $mainMod = SUPER
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-bind = $mainMod, Q, exec, kitty
+bind = $mainMod, Q, exec, [workspace 6 silent;float;noanim] kitty# windowrule=move 70% 5%,^(kitty)$
+windowrule=move 10% 10%,^(kitty)$
+windowrule=size 80% 80%,^(kitty)$
 # Passes the selected screen into standard output and pipes it to swappy
 bind = $mainMod, D, exec, ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -
 bind = $mainMod, K, killactive, 
