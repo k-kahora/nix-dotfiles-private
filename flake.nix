@@ -35,7 +35,7 @@
     # Hyprland plugins
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
+      #inputs.hyprland.follows = "hyprland";
     };
     
     # Firefox extensions
