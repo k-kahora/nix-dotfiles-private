@@ -49,10 +49,11 @@
     # ./emacs.nix
     #./eww.nix
     ./firefox.nix
-    ./nvim.nix
+    # ./nvim.nix
     ./lf.nix
     ./tofi.nix
     inputs.nix-colors.homeManagerModules.default
+    #inputs.homeManagerModules.nixvim
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
@@ -69,6 +70,8 @@
     nitch
     wl-clipboard
     pika-backup
+    neovim
+    steam-run # mimics a FHS file system that allows some programs to run normally like Mason with nixos!!
     
     gh # github cli tool // pretty solid tool I mess with it
     # # Adds the 'hello' command to your environment. It prints a friendly

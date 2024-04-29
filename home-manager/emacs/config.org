@@ -966,6 +966,7 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 #+end_src
 
 
+
 * eglot
 #+begin_src emacs-lisp
 (use-package eglot

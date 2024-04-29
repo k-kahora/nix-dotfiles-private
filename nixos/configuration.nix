@@ -266,6 +266,7 @@
     users."malcolm" = {
       directories = [
        "Documents"
+       # ".config/nvim"
        "org-roam"
        "Pictures"
        "nix-dotfiles"
