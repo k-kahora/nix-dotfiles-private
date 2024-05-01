@@ -9,13 +9,13 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
+    #nixvim = {
+      #url = "github:nix-community/nixvim";
       # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
       # url = "github:nix-community/nixvim/nixos-23.05";
 
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+      #inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #};
 
     nur.url = "github:nix-community/NUR";
 
