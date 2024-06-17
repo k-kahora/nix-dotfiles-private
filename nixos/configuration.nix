@@ -10,6 +10,7 @@
       inputs.home-manager.nixosModules.home-manager
       inputs.impermanence.nixosModules.impermanence
     ];
+  programs.fuse.userAllowOther = true; # Allows home manager to do its thing on boot
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     users."malcolm" = import ../home-manager/home.nix;
@@ -135,6 +136,9 @@
     unzip
     ripgrep
     direnv
+    keepassxc # Password manager
+    
+
     zip
     gtk3 # Needed to use emacs as my run launcher
     killall # Type killall emacs to get rid of all emacs processec
@@ -181,6 +185,9 @@
  	epkgs.python-black # this package is stupid for what you do delete this when you can make your own
  	epkgs.lsp-bridge
     	epkgs.lsp-mode
+    	epkgs.emmet-mode
+    	epkgs.yasnippet
+    	epkgs.yasnippet-snippets
     	epkgs.tree-sitter-langs
 	epkgs.ocamlformat
     	epkgs.tree-sitter
@@ -213,6 +220,7 @@
 
         epkgs.rainbow-delimiters
         epkgs.org-roam # TODO
+        epkgs.org-fancy-priorities # TODO
         epkgs.org-drill # TODO
         epkgs.company
         epkgs.dashboard # TODO
@@ -269,6 +277,7 @@
        # ".config/nvim"
        "org-roam"
        "Pictures"
+       "Sync"
        "nix-dotfiles"
        # Fish history
        ".local/share/fish"

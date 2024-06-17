@@ -392,30 +392,54 @@ When cycling through a directory is thows the file on the right
     "h w" '(where-is :wk "Prints keybinding for command if set")
     "h x" '(describe-command :wk "Display full documentation for command"))
 
+ 
+  (mk/leader-keys
+    "n" '(:ignore t :wk "Org")
+    "n f" '(org-roam-node-find :wk "Org roam node find")
+    "n r" '(org-roam-node-random :wk "Org roam node random")
+    "n i" '(org-roam-node-insert :wk "Org roam node insert"))
+
+  ; TODO Make all the org mode keys o and the open keys something else entirely
   (mk/leader-keys
     "m" '(:ignore t :wk "Org")
-    "m a" '(org-agenda :wk "Org agenda")
-    "m e" '(org-export-dispatch :wk "Org export dispatch")
-    "m i" '(org-toggle-item :wk "Org toggle item")
-    "m I" '(org-toggle-inline-images :wk "Org toggle inline images")
-    "m t" '(org-todo :wk "Org todo")
-    "m B" '(org-babel-tangle :wk "Org babel tangle")
-    "m E" '(org-babel-execute-buffer :wk "Executer all src blocks in buffer")
-    "m T" '(org-todo-list :wk "Org todo list"))
+    "m a" '(org-agenda :wk "Org [a]genda")
+    "m e" '(org-export-dispatch :wk "Org [e]xport dispatch")
+    "m i" '(org-toggle-item :wk "Org toggle [i]tem")
+    "m I" '(org-toggle-inline-images :wk "Org toggle inline [I]mages")
+    "m s" '(org-todo :wk "Org todo [s]tate")
+    "m p" '(org-priority :wk "Org [p]riority")
+    "m b" '(org-babel-tangle :wk "Org [b]abel tangle")
+    "m E" '(org-babel-execute-buffer :wk "[E]xecute all src blocks in buffer")
+    "m T" '(org-todo-list :wk "Org [T]ODO list"))
 
   (mk/leader-keys
-    "m b" '(:ignore t :wk "Tables")
-    "m b -" '(org-table-insert-hline :wk "Insert hline in table"))
+    "m t" '(:ignore t :wk "[t]ables")
+    ;; "m t i" '(org-table-insert-hline :wk "[I]nsert hline in table")
+    "m t c" '(org-table-toggle-coordinate-overlays :wk "Toggle [c]ordinate overlays")
+    "m t ?" '(org-table-field-info :wk "Find info on org table")
+  "m t n" '(org-table-create-or-convert-from-region :wk "Create a [n]ew table")
+  "m t e" '(org-table-eval-formula :wk "Create an org table [e]quation")
+  "m t *" '((org-table-recalculate) :wk "Recalulate the whole table")
+  "m t s" '(org-table-sort-lines :wk "[S]ort the table")
+  "m t h" '(org-table-insert-hline :wk "Insert [h]orizontal line into the table")
+  "m t d" '(org-table-toggle-formula-debugger :wk "Toggle table [d]ebugging"))
+
+
 
   (mk/leader-keys
     "m d" '(:ignore t :wk "Date/deadline")
     "m d t" '(org-time-stamp :wk "Org time stamp"))
+  
+
 
   (mk/leader-keys
     "o" '(:ignore t :wk "Open")
     "o d" '(dashboard-open :wk "Dashboard")
     "o e" '(elfeed :wk "Elfeed RSS")
     "o f" '(make-frame :wk "Open buffer in new frame")
+    "o m" '(imenu :wk "imenu")
+    "o r" '(regexp-builder :wk "Build up a regexp")
+    "o t" '(vterm-toggle :wk "Toggle vterm")
     "o F" '(select-frame-by-name :wk "Select frame by name"))
 
   ;; projectile-command-map already has a ton of bindings
@@ -439,8 +463,7 @@ When cycling through a directory is thows the file on the right
     "t n" '(neotree-toggle :wk "Toggle neotree file viewer")
     "t o" '(org-mode :wk "Toggle org mode")
     "t r" '(rainbow-mode :wk "Toggle rainbow mode")
-    "t t" '(visual-line-mode :wk "Toggle truncated lines")
-    "t v" '(vterm-toggle :wk "Toggle vterm"))
+    "t t" '(visual-line-mode :wk "Toggle truncated lines"))
 
   (mk/leader-keys
     "w" '(:ignore t :wk "Windows")
@@ -897,12 +920,126 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 ** Company
 
 * Org mode
+** Org fancy
+
+#+begin_src emacs-lisp 
+(use-package org-fancy-priorities
+  :hook
+  (org-mode . org-fancy-priorities-mode))
+
+#+end_src
+** Actual Org Mode
 #+begin_src emacs-lisp 
 (use-package org
   :config (setq org-latex-src-block-backend 'engraved)
+  (setq org-agenda-files '("~/Documents/org-agenda/"))
+  (setq org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
+          '((sequence
+             "TODO(t)"           ; A task that is ready to be tackled
+             "LEET(l)"           ; Leetcode assignments
+             "GYM(g)"            ; Things to accomplish at the gym
+             "RUN(n)"            ; These are one off things I try to get done by the end of the day
+             "BMX(b)"            ; Things to accomplish on the bike
+             "PROJ(p)"           ; A project that contains other tasks
+             "JOB(j)"            ; Things to accomplish for potential jobs
+             "WAIT(w)"           ; Something is holding up this task
+             "|"                 ; The pipe necessary to separate "active" states and "inactive" states
+             "DONE(d)"           ; Task has been completed
+             "CANCELLED(c)" )))  ; Task has been cancelled
+  ;; Org agenad variables
+(setq org-fancy-priorities-list ' ("🔰" "🟥" "🟧" "🟨"))
+(setq org-priority-lowest ?D)
+
+
+; ("🔴" "🟠" "🟡" "🟢")
+; ("🔴" "🟠" "🟡")
+; ("♥️" "♦️" "♠️" "♣️")
+; ("♦️" "♠️" "♣️")
+; ("🟥" "🟧" "🟨")
+
+;; org-fancy-priorities-list '((?A . "❗")
+;;                                   (?B . "⬆")
+;;                                   (?C . "⬇")
+;;                                   (?D . "☕")
+;;                                   (?1 . "⚡")
+;;                                   (?2 . "⮬")
+;;                                   (?3 . "⮮")
+;;                                   (?4 . "☕")
+;;                                   (?I . "Important"))
+(setq org-agenda-custom-commands
+      '(("v" "A better agenda view"
+         ((tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
+          (tags "PRIORITY=\"B\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "Medium-priority unfinished tasks:")))
+          (tags "PRIORITY=\"C\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "Low-priority unfinished tasks:")))
+          (tags "customtag"
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-overriding-header "Tasks marked with customtag:")))
+
+          (agenda "")
+          (alltodo "")))))
+
+(setq org-agenda-block-separator 8411) ; this is a special char seperator for the agenda view
+;; Org capture templates
+(setq malcolm/org-agenda-directory "~/Documents/org-agenda/")
+
+(setq org-capture-templates
+       `(("t" "todo" entry (file ,(concat malcolm/org-agenda-directory "agenda.org" ))
+	  "* TODO %?\n%u\n%a\n" :clock-in t :clock-resume t)
+	 ("m" "Meeting" entry (file ,(concat malcolm/org-agenda-directory "journal.org" ))
+	  "* MEETING with %? :MEETING:\n%t" :clock-in t :clock-resume t)
+	 ("d" "Diary" entry (file+datetree (concat malcolm/org-agenda-directory "agenda.org" ))
+	  "* %?\n%U\n" :clock-in t :clock-resume t)
+	 ("i" "Idea" entry (file ,(concat malcolm/org-agenda-directory "agenda.org" ) )
+	  "* %? :IDEA: \n%t" :clock-in t :clock-resume t)
+	 ("n" "Next Task" entry (file+headline ,(concat malcolm/org-agenda-directory "agenda.org" ) "Tasks")
+	  "** NEXT [#A] %? \nDEADLINE: %t") ))
+
+;; Allows refile to look at subheadings
+(setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9))))
+  ;; Org agenda table
+(setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16TIMESTAMP_IA")
+:bind
+(("M-n" . org-metaleft)
+("M-a" . org-metadown)
+("M-i" . org-metaup)
+("M-o" . org-metaright)
+
+("M-S-n" . org-shiftmetaleft)
+("M-S-a" . org-shiftmetadown)
+("M-S-i" . org-shiftmetaup)
+("M-S-o" . org-shiftmetaright)
+("M-N" . org-shiftmetaleft)
+("M-A" . org-shiftmetadown)
+("M-I" . org-shiftmetaup)
+("M-O" . org-shiftmetaright)
+)
 )
 
+(defun jethro/org-agenda-process-inbox-item ()
+  "Process a single item in the org-agenda."
+  (org-with-wide-buffer
+   (org-agenda-set-tags)
+   (org-agenda-priority)
+   (call-interactively 'jethro/my-org-agenda-set-effort)
+   (org-agenda-refile nil nil t)))
 
+
+
+
+#+end_src
+
+* Regex builder
+This is a useful tool for building regulare expressions
+
+#+begin_src emacs-lisp
+(setq reb-re-syntax 'string)
 #+end_src
 * Org-babel
 #+begin_src emacs-lisp
@@ -910,7 +1047,11 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
- (shell . t)))
+ (shell . t)
+(awk . t)
+(clojure . t)
+(scheme . t)
+))
 
 (setq org-confirm-babel-evaluate nil)
 #+end_src
@@ -965,8 +1106,6 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
 
-
-
 * eglot
 #+begin_src emacs-lisp
 (use-package eglot
@@ -999,3 +1138,48 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 
 
 #+end_src
+
+* smerge mode
+#+begin_src emacs-lisp
+(use-package smerge-mode
+  :ensure nil
+  :init
+  (setq smerge-command-prefix "C")
+
+  :config
+  ;; https://github.com/alphapapa/unpackaged.el#smerge-mode
+  (defhydra hydra/smerge
+    (:color pink :hint nil :post (smerge-auto-leave))
+    "
+^Move^       ^Keep^               ^Diff^                 ^Other^
+^^-----------^^-------------------^^---------------------^^-------
+_n_ext       _b_ase               _<_: upper/base        _C_ombine
+_p_rev       _u_pper              _=_: upper/lower       _r_esolve
+^^           _l_ower              _>_: base/lower        _k_ill current
+^^           _a_ll                _R_efine
+^^           _RET_: current       _E_diff
+"
+    ("n" smerge-next)
+    ("p" smerge-prev)
+    ("b" smerge-keep-base)
+    ("u" smerge-keep-upper)
+    ("l" smerge-keep-lower)
+    ("a" smerge-keep-all)
+    ("RET" smerge-keep-current)
+    ("\C-m" smerge-keep-current)
+    ("<" smerge-diff-base-upper)
+    ("=" smerge-diff-upper-lower)
+    (">" smerge-diff-base-lower)
+    ("R" smerge-refine)
+    ("E" smerge-ediff)
+    ("C" smerge-combine-with-next)
+    ("r" smerge-resolve)
+    ("k" smerge-kill-current)
+    ("q" nil "cancel" :color blue))
+
+  :bind (("C-c c" . hydra/smerge/body))
+  )
+#+end_src
+
+#+RESULTS:
+: hydra/smerge/body

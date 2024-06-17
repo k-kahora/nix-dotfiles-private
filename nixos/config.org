@@ -641,6 +641,7 @@ Current philoshy is that the core bindings I use every day in emacs are all chor
 	  "og" '(magit :which-key "Open magit" )
 	  "ot" '(vterm-toggle :which-key "vterm popper")
 	  "om" '(multi-vterm :which-key "new vterm buffer")
+	  "oi" '(imenu :which-key "imenu")
 	  "oe" '(mk/launch-epiphany :which-key "epiphany" )
 	  "od" '(docker :which-key "docker" ))
 

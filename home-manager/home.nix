@@ -61,14 +61,23 @@
   home.packages = with pkgs;[
   
     # Pixel are tool
+    
+    # Screen recording
+    obs-studio
+    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk
 
+
+    # tools
     rofi-emoji
     tofi
+    just
     # just # simpler make file I have a root justfile for nix commands I run alot
     # removed just for use in system wide config in favor of fish aliases -> there are alot cleaner
     pfetch
     nitch
     wl-clipboard
+    hyprpicker # Hyprladn color picker
     pika-backup
     neovim
     steam-run # mimics a FHS file system that allows some programs to run normally like Mason with nixos!!
