@@ -139,7 +139,7 @@ OR EDIT THIS ONE ACCORDING TO THE WIKI INSTRUCTIONS.
 
 # See https://wiki.hyprland.org/Configuring/Monitors/
 
-monitor= eDP-1, disable
+# monitor= eDP-1, disable
 monitor= DP-1, highres, 0x0, 1, bitdepth, 10
 monitor= HDMI-A-2, highres, 1920x0, 1, bitdepth, 10
 

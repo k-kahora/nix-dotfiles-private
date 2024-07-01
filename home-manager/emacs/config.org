@@ -304,7 +304,7 @@ When cycling through a directory is thows the file on the right
     "e" '(:ignore t :wk "Eshell/Evaluate")
     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-    "e e" '(eval-expression :wk "Evaluate and elisp expression")
+    "e :" '(eval-expression :wk "Evaluate and elisp expression")
     "e h" '(counsel-esh-history :which-key "Eshell history")
     "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
     "e r" '(eval-region :wk "Evaluate elisp in region")
@@ -1183,3 +1183,17 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 #+RESULTS:
 : hydra/smerge/body
+
+* Custom packages
+** Widgets
+*** Clock in 
+#+begin_src emacs-lisp 
+
+(load-file "~/Projects/widgets/clock-in/clock-in.el")
+(load-file "~/Projects/elisp/justice-reader/main.el")
+(justfile-mode)
+
+#+end_src
+
+#+RESULTS:
+: t
