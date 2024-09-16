@@ -139,18 +139,44 @@ OR EDIT THIS ONE ACCORDING TO THE WIKI INSTRUCTIONS.
 
 # See https://wiki.hyprland.org/Configuring/Monitors/
 
+# NOTE FIXME in a monitor setup uncomment this line
 # monitor= eDP-1, disable
-monitor= DP-1, highres, 0x0, 1, bitdepth, 10
-monitor= HDMI-A-2, highres, 1920x0, 1, bitdepth, 10
 
+# monitor= DP-1, highres, 0x0, 1, bitdepth, 10
+# monitor= HDMI-A-2, highres, 1920x0, 1, bitdepth, 10
+# monitor= DP-3,preferred,auto,1,transform,1 
+# Rotates my ultrawide monitor to a vertical display
+
+# |7|8|9|
+# |4|5|6|
+# |1|2|3|
+
+
+workspace = 1, monitor:DP-1, on-created-empty:firefox
+workspace = 2, monitor:HDMI-A-2
+workspace = 3, monitor:HMDI-A-2, on-created-empty:kitty
+workspace = 4, monitor:DP-1, on-created-empty:firefox
+workspace = 5, monitor:HDMI-A-2
+workspace = 6, monitor:HMDI-A-2, on-created-empty:emacsclient -c 
+workspace = 7, monitor:DP-1, on-created-empty:firefox
+workspace = 8, monitor:HDMI-A-2
+workspace = 9, monitor:HMDI-A-2, on-created-empty:keypassxc
+
+# workspace = 1,monitor:HDMI-A-2,on-created-empty:kitty
+# workspace = 4,monitor:HDMI-A-2, default:true, on-created-empty:emacsclient -c 
+# workspace = 7,monitor:HDMI-A-2
+
+# workspace = 3,monitor:DP-1, on-created-empty:firefox
+# workspace = 6,monitor:DP-1, on-created-empty:firefox
+# workspace = 9,monitor:DP-1
 
 # workspace
-workspace = 4, monitor:DP-1, default:true, on-created-empty:emacsclient -c 
-workspace = 5, monitor:DP-1, on-created-empty:kitty
-workspace = 6, monitor:DP-1, 
-workspace = 1, monitor:HDMI-A-2, default:true, on-created-empty:firefox
-workspace = 2, monitor:HDMI-A-2, on-created-empty:firefox
-workspace = 3, monitor:HDMI-A-2, on-created-empty:keypassxc
+# workspace = 4, monitor:DP-1, default:true, on-created-empty:emacsclient -c 
+# workspace = 5, monitor:DP-1, on-created-empty:kitty
+# workspace = 6, monitor:DP-1, 
+# workspace = 1, monitor:HDMI-A-2, default:true, on-created-empty:firefox
+# workspace = 2, monitor:HDMI-A-2, on-created-empty:firefox
+# workspace = 3, monitor:HDMI-A-2, on-created-empty:keypassxc
 
 
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more

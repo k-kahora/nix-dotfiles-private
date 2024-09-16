@@ -83,6 +83,13 @@
     steam-run # mimics a FHS file system that allows some programs to run normally like Mason with nixos!!
     
     gh # github cli tool // pretty solid tool I mess with it
+    
+    foliate # excelent epub reader
+    
+    plantuml # This is for epic UML diagrams
+    openjdk # need this to run the jar
+    graphviz # Needed for plantuml
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

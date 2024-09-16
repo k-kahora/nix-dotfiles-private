@@ -194,6 +194,7 @@
 	epkgs.company
 	epkgs.chatgpt-shell # need api tokens 
 	epkgs.nix-mode
+	epkgs.plantuml-mode
 
 	# Ocaml dev
     	epkgs.tuareg

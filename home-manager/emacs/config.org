@@ -247,6 +247,16 @@ When cycling through a directory is thows the file on the right
 ;; Temorary todo list for <2023-04-09 Sun>
 (set-register ?h '(file . "/home/malcolm/nix-dotfiles/home-manager/home.nix"))
 #+end_src
+
+* Direnv
+#+begin_src emacs-lisp 
+(use-package envrc
+ :config
+ (envrc-global-mode))
+ 
+#+end_src
+
+
 * General Keybindigs
 
 #+begin_src emacs-lisp
@@ -394,7 +404,7 @@ When cycling through a directory is thows the file on the right
 
  
   (mk/leader-keys
-    "n" '(:ignore t :wk "Org")
+    "n" '(:ignore t :wk "Org roam")
     "n f" '(org-roam-node-find :wk "Org roam node find")
     "n r" '(org-roam-node-random :wk "Org roam node random")
     "n i" '(org-roam-node-insert :wk "Org roam node insert"))
@@ -411,6 +421,12 @@ When cycling through a directory is thows the file on the right
     "m b" '(org-babel-tangle :wk "Org [b]abel tangle")
     "m E" '(org-babel-execute-buffer :wk "[E]xecute all src blocks in buffer")
     "m T" '(org-todo-list :wk "Org [T]ODO list"))
+  
+; most used keybindings right here especially alow to load up a flake environment super useful
+(mk/leader-keys
+    "f" '(:ignore t :wk "Flakes")
+    "f e" '(envrc-command-map :wk "envrc commandmap")
+    "f a" '(envrc-allow :wk "envrc allow"))
 
   (mk/leader-keys
     "m t" '(:ignore t :wk "[t]ables")
@@ -766,14 +782,6 @@ When cycling through a directory is thows the file on the right
   (global-ligature-mode 1))
 
 #+end_src
-* Direnv
-#+begin_src emacs-lisp 
-(use-package envrc
- :config
- (envrc-global-mode)
- (with-eval-after-load 'envrc
-  (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)))
-#+end_src
 * Projectile
 #+begin_src emacs-lisp 
 (use-package projectile
@@ -1041,6 +1049,18 @@ This is a useful tool for building regulare expressions
 #+begin_src emacs-lisp
 (setq reb-re-syntax 'string)
 #+end_src
+
+* PlantUML
+
+#+begin_src emacs-lisp
+(use-package plantuml-mode
+
+)
+    (setq plantuml-jar-path "/nix/store/yz0xczcp3pz681rgm5j8pbnb2hk4dx80-plantuml-1.2023.10/bin")
+    (setq plantuml-default-exec-mode 'executable)
+#+end_src 
+
+
 * Org-babel
 #+begin_src emacs-lisp
 (require 'org-tempo) 
@@ -1051,7 +1071,10 @@ This is a useful tool for building regulare expressions
 (awk . t)
 (clojure . t)
 (scheme . t)
+(plantuml . t)
 ))
+
+(setq org-plantuml-jar-path "/nix/store/yz0xczcp3pz681rgm5j8pbnb2hk4dx80-plantuml-1.2023.10/lib/plantuml.jar")
 
 (setq org-confirm-babel-evaluate nil)
 #+end_src
@@ -1105,6 +1128,11 @@ This is a useful tool for building regulare expressions
   (setenv "TERM" "xterm-256color") ;; needed to make colors appear in compilation buffer
 :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
+
+#+RESULTS:
+| ansi-color-compilation-filter |
+
+
 
 * eglot
 #+begin_src emacs-lisp
@@ -1197,3 +1225,32 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 #+RESULTS:
 : t
+
+* Macros
+#+begin_src emacs-lisp
+(defalias 'byte_ocaml
+   (kmacro "i ' \\ x <escape> l l a ' ; <escape> l"))
+#+end_src
+
+* Advise Next Command (I use for Merlin mode espically with copy-type)
+#+begin_src emacs-lisp
+(defun copy-last-message-to-clipboard ()
+  "Copy the last message in the *Messages* buffer to the clipboard."
+  (interactive)
+  (with-current-buffer "*Messages*"
+    (let ((last-message (car (last (split-string (buffer-string) "\n" t)))))
+      (kill-new last-message)
+      (message "Copied last message: %s" last-message))))
+
+(defun advise-after-command (command)
+  "Advise COMMAND to run `copy-last-message-to-clipboard` after it."
+  (advice-add command :after (lambda (&rest _args) (copy-last-message-to-clipboard))))
+
+(defun advise-next-command ()
+  "Advise the next command to run `copy-last-message-to-clipboard` after it."
+  (interactive)
+  (let ((command (read-command "Advise command: ")))
+    (advise-after-command command)))
+
+
+#+end_src 
