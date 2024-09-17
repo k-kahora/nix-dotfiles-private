@@ -7,6 +7,7 @@
     mouse = true;
     keyMode = "vi";
     shortcut = "Space";
+    prefix = "c-a";
 #   shell = "\${pkgs.zsh}/bin/zsh";
     plugins = with pkgs; [
       tmuxPlugins.sensible
@@ -19,9 +20,6 @@
 
     set-option -sa terminal-overrides ",xterm*:Tc"
 
-    # Shift + Alt to move through windows
-    bind -n M-H previous-window
-    bind -n M-L next-window
 
     set -g @catppuccin_flavour 'mocha'
 
@@ -37,26 +35,12 @@
     unbind r
     bind r source-file ~/.config/tmux/tmux.conf
 
+    # Shift + Alt to move through windows
+    bind -n M-P previous-window
+    bind -n M-N next-window
 
-    # pane bindings mirror emacs
-    
-    unbind '"'
-    unbind %
-    unbind s
-    unbind R
-    unbind ,
-    
-    bind s split-window -h -c "#{pane_current_path}"
-    bind v split-window -v -c "#{pane_current_path}"
-    bind , list-sessions
-    # bind-key R rename-window 
-    
-    # ergo pane switching
-
-    bind -n M-n select-pane -L
-    bind -n M-o select-pane -R
-    bind -n M-i select-pane -U
-    bind -n M-a select-pane -D
+    bind '"' split-window -v -c "#{pane_current_path}"
+    bind % split-window -h -c "#{pane_current_path}"
 
     '';
   };

@@ -77,9 +77,7 @@
     pfetch
     nitch
     wl-clipboard
-    hyprpicker # Hyprladn color picker
     pika-backup
-    neovim
     steam-run # mimics a FHS file system that allows some programs to run normally like Mason with nixos!!
     
     gh # github cli tool // pretty solid tool I mess with it

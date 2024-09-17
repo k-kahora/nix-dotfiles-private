@@ -280,7 +280,7 @@ decoration {
 }
 
 animations {
-    enabled = yes
+    enabled = no
 
     # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
 
@@ -354,6 +354,7 @@ bind = $mainMod, SPACE, togglefloating,
 bind = $mainMod, R, exec, tofi-drun --drun-launch=true
 bind = $mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
 bind = $mainMod, J, togglesplit, # dwindle
+bind = $mainMod, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a # dwindle
 
 
 # code:10 -> exclamation point

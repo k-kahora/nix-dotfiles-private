@@ -42,13 +42,10 @@
       
       # Nix helpful command
       "edit" = "nix edit nixpkgs#bat";
-      "nvim"
+      "nvim" = "nix run ~/Projects/blog-neovim-nix/ --";
       
       # fire command to make a directory on the tmp filesystem (On Ram so it gets reset)
       "burner" = "cd \"\$(mktemp -d)\"";
-
-
-
     };
 
   };
