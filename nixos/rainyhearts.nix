@@ -1,10 +1,10 @@
 { lib, stdenv, fetchurl }:
 
 stdenv.mkDerivation rec {
-  pname = "W95FA";
+  pname = "rainyhearts";
   version = "1.0";
 
-  src = ./W95FA;
+  src = ./rainyhearts;
 
   installPhase = ''
     mkdir -p $out/share/fonts/opentype

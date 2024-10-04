@@ -156,7 +156,7 @@
     qmk
     # Fonts
     (callPackage ./comic-code.nix {})
-    (callPackage ./W95FA.nix {})
+    (callPackage ./rainyhearts.nix {})
 
     # Emacs
     (pkgs.emacsWithPackagesFromUsePackage {
