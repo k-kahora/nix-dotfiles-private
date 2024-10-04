@@ -85,7 +85,8 @@
     foliate # excelent epub reader
     
     plantuml # This is for epic UML diagrams
-    openjdk # need this to run the jar
+    # plantuml may need openjdk rather than jdk17
+    jdk17 # need this to run the jar 
     graphviz # Needed for plantuml
 
     # # Adds the 'hello' command to your environment. It prints a friendly
