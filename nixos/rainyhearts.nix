@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
   src = ./rainyhearts;
 
   installPhase = ''
-    mkdir -p $out/share/fonts/opentype
-    cp -r $src $out/share/fonts/opentype/${pname}.otf
+    mkdir -p $out/share/fonts/truetype
+    cp -r $src/*.ttf $out/share/fonts/truetype/${pname}.ttf
   '';
 
   meta = with lib; {

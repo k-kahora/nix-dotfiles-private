@@ -157,6 +157,7 @@
     # Fonts
     (callPackage ./comic-code.nix {})
     (callPackage ./rainyhearts.nix {})
+    (callPackage ./pixelmix.nix {})
 
     # Emacs
     (pkgs.emacsWithPackagesFromUsePackage {
