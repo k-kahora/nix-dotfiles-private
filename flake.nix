@@ -23,6 +23,8 @@
     #   url = "gitlab:rycee/nur-expressions";
     #   flake = false;
     # };
+    # My packages
+    password-manager.url = "github:k-kahora/keepassxc-widget";
 
 
     # Impertance Module

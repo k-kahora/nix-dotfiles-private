@@ -192,7 +192,9 @@
     	epkgs.yasnippet-snippets
     	epkgs.tree-sitter-langs
 	epkgs.ocamlformat
-    	epkgs.tree-sitter
+        epkgs.elixir-ts-mode
+    	
+epkgs.tree-sitter
 	epkgs.company
 	epkgs.chatgpt-shell # need api tokens 
 	epkgs.nix-mode
@@ -345,6 +347,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
+  nix.settings.trusted-users = ["root" "malcolm"];
 
 
   fonts.packages = with pkgs; [

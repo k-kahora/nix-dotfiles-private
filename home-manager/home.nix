@@ -63,6 +63,9 @@
     # Pixel are tool
     
     # Screen recording
+
+    # inputs.password-manager.packages."x86_64-linux"."default"
+
     obs-studio
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk

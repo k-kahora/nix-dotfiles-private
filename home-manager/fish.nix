@@ -29,6 +29,7 @@
     # bind --erase \el
     # bind \el forward-char
     fish_vi_key_bindings 2>/dev/null
+    set -x KEEPASSXC_DB "/home/malcolm/Documents/PassDatabase/Passwords.kdbx"
     '';
     shellAbbrs = {
       ll = "${pkgs.eza}/bin/eza -l --color=always  --group-directories-first";

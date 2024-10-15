@@ -52,7 +52,7 @@ hyprctl keyword animations:enabled no
   
   mk-start = pkgs.writeShellApplication {
     name = "start";
-    runtimeInputs = [pkgs.waybar pkgs.dunst pkgs.networkmanagerapplet ];
+    runtimeInputs = [pkgs.waybar pkgs.dunst pkgs.networkmanagerapplet inputs.password-manager.packages."x86_64-linux"."default"];
     text = ''
     waybar &
     sleep 1
@@ -62,8 +62,11 @@ hyprctl keyword animations:enabled no
     sleep 1
     swww init &
     sleep 1
-    emacs --init-directory=/home/malcolm/nix-dotfiles/home-manager/emacs --fg-daemon
+    emacs --init-directory=/home/malcolm/nix-dotfiles/home-manager/emacs --fg-daemon &
     sleep 1
+    pass-launcher open &
+    sleep 1
+    pass-launcher toggle &
     '';
   };
 
@@ -355,6 +358,7 @@ bind = $mainMod, R, exec, tofi-drun --drun-launch=true
 bind = $mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
 bind = $mainMod, J, togglesplit, # dwindle
 bind = $mainMod, C, exec, ${pkgs.hyprpicker}/bin/hyprpicker -a # dwindle
+bind = $mainMod, P, exec, ${inputs.password-manager.packages."x86_64-linux"."default"}/bin/pass-launcher toggle # dwindle
 
 
 # code:10 -> exclamation point
@@ -376,11 +380,9 @@ bind = $mainMod K, I, moveintogroup, u
 
 # Cycles
 bind = $mainMod, N, cyclenext,
-bind = $mainMod, P, cyclenext, prev
 
 # Swaps
 bind = $mainMod CTRL, N, swapnext,
-bind = $mainMod CTRL, P, swapnext, prev
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, F, fullscreen, 0
