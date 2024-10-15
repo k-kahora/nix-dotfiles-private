@@ -859,14 +859,7 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 
 #+begin_src emacs-lisp 
 
-
-(use-package
-  emacs
-  :ensure nil
-  :custom
-
   ;; Should use:
-  ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
   ;; at least once per installation or while changing this list
 
 (use-package treesit
@@ -895,10 +888,10 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 	  (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
 	  (zig . ("https://github.com/GrayJack/tree-sitter-zig"))))
 
-  (setq treesit-language-source-alist
-	'(
-	  (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" "master" "src"))
-	  ))
+  ;; (setq treesit-language-source-alist
+  ;; 	'(
+  ;; 	  (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" "master" "src"))
+  ;; 	  ))
   :config
   (defun nf/treesit-install-all-languages ()
     "Install all languages specified by `treesit-language-source-alist'."
@@ -912,6 +905,10 @@ put thses into .emacs.d/treesitter/ and rename them all libtree-sitter-<lang>.so
 (add-hook 'tuareg-mode-hook #'tree-sitter-mode)
 (add-hook 'tuareg-mode-hook #'tree-sitter-hl-mode)
 #+end_src
+
+#+RESULTS:
+| merlin-mode | merlin-eldoc-setup | (lambda nil (add-hook 'before-save-hook 'ocamlformat-before-save)) | tree-sitter-hl-mode | tree-sitter-mode |
+
 ** Merlin
 
 #+begin_src emacs-lisp
@@ -1153,14 +1150,15 @@ This is a useful tool for building regulare expressions
 (use-package eglot
 :hook ((python . eglot-ensure)
        (js-mode . elgot-ensure)
-       (html-mode . elgot-ensure))
+       (html-mode . elgot-ensure)
+(elixir-ts-mode . elgot-ensure))
 :config
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
 
   ;; JavaScript - Assuming you're using a language server like js-ts-ls or similar
   (add-to-list 'eglot-server-programs '(js-mode . ("typescript-language-server" "--stdio")))
   
-  (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("language_server.sh")))
+  (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("elixir-ls")))
   ;; HTML - Using vscode-html-languageserver
   (add-to-list 'eglot-server-programs '(html-mode . ("vscode-html-languageserver" "--stdio"))))
 
@@ -1174,22 +1172,22 @@ This is a useful tool for building regulare expressions
 #+end_src
 * elixir
 #+begin_src emacs-lisp
-;; (use-package
-;;  elixir-ts-mode
-;;  :hook (elixir-ts-mode . eglot-ensure)
-;;  (elixir-ts-mode
-;;   .
-;;   (lambda ()
-;;     (push '(">=" . ?\u2265) prettify-symbols-alist)
-;;     (push '("<=" . ?\u2264) prettify-symbols-alist)
-;;     (push '("!=" . ?\u2260) prettify-symbols-alist)
-;;     (push '("==" . ?\u2A75) prettify-symbols-alist)
-;;     (push '("=~" . ?\u2245) prettify-symbols-alist)
-;;     (push '("<-" . ?\u2190) prettify-symbols-alist)
-;;     (push '("->" . ?\u2192) prettify-symbols-alist)
-;;     (push '("<-" . ?\u2190) prettify-symbols-alist)
-;;     (push '("|>" . ?\u25B7) prettify-symbols-alist)))
-;;  (before-save . eglot-format))
+(use-package
+ elixir-ts-mode
+ :hook (elixir-ts-mode . eglot-ensure)
+ (elixir-ts-mode
+  .
+  (lambda ()
+    (push '(">=" . ?\u2265) prettify-symbols-alist)
+    (push '("<=" . ?\u2264) prettify-symbols-alist)
+    (push '("!=" . ?\u2260) prettify-symbols-alist)
+    (push '("==" . ?\u2A75) prettify-symbols-alist)
+    (push '("=~" . ?\u2245) prettify-symbols-alist)
+    (push '("<-" . ?\u2190) prettify-symbols-alist)
+    (push '("->" . ?\u2192) prettify-symbols-alist)
+    (push '("<-" . ?\u2190) prettify-symbols-alist)
+    (push '("|>" . ?\u25B7) prettify-symbols-alist)))
+ (before-save . eglot-format))
 #+end_src
 
 * company
