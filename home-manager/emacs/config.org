@@ -503,6 +503,7 @@ When cycling through a directory is thows the file on the right
     "w H" '(buf-move-left :wk "Buffer move left")
     "w J" '(buf-move-down :wk "Buffer move down")
     "w K" '(buf-move-up :wk "Buffer move up")
+    "w u" '(winner-undo :wk "Winner undo")
     "w L" '(buf-move-right :wk "Buffer move right"))
   )
 
@@ -539,6 +540,8 @@ When cycling through a directory is thows the file on the right
 (scroll-bar-mode -1)         ;; Disable the scroll bar
 (tool-bar-mode -1)           ;; Disable the tool bar
 (setq org-edit-src-content-indentation 0) ;; Set src block automatic indent to 0 instead of 2.
+
+(auto-save-visited-mode 1)
 
 ;; Using things like Async shell you can now use C-p to go to the last command
 (define-key minibuffer-local-map (kbd "C-p") 'previous-history-element)
@@ -1146,34 +1149,58 @@ This is a useful tool for building regulare expressions
 
 
 * eglot
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp 
 (use-package eglot
-:hook ((python . eglot-ensure)
-       (js-mode . elgot-ensure)
-       (html-mode . elgot-ensure)
-(elixir-ts-mode . elgot-ensure))
-:config
+  :hook ((python . eglot-ensure)
+	 (js-mode . eglot-ensure)
+	 (html-mode . eglot-ensure)
+	 (elixir-ts-mode . eglot-ensure)
+	 (elixir-ts-mode . yas-minor-mode))
+  :config
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
 
   ;; JavaScript - Assuming you're using a language server like js-ts-ls or similar
   (add-to-list 'eglot-server-programs '(js-mode . ("typescript-language-server" "--stdio")))
   
   (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("elixir-ls")))
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-y") 'company-complete-selection))
+(setq lsp-log-io t)
   ;; HTML - Using vscode-html-languageserver
-  (add-to-list 'eglot-server-programs '(html-mode . ("vscode-html-languageserver" "--stdio"))))
+  :bind-keymap ("C-c l" . eglot-mode-map))
 
-;; Python auto formatting
-(use-package python-black
-  :demand t
-  :after python
-  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+;; ;; Python auto formatting
+;; (use-package python-black
+;;   :demand t
+;;   :after python
+;;   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
+#+end_src 
+* lsp
+#+begin_src emacs-lisp 
 
-#+end_src
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook
+  ((elixir-ts-mode . lsp)
+   (elixir-ts-mode . yas-minor-mode)) ;; Automatically start yasnippet in elixir-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (setq lsp-elixir-server-command
+	'("elixir-ls"))
+  (lsp-enable-which-key-integration t)
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-y") 'company-complete-selection))
+(setq lsp-log-io t)
+)
+
+#+end_src 
+
 * elixir
-#+begin_src emacs-lisp
-(use-package
- elixir-ts-mode
+#+begin_src emacs-lisp :tangle no
+(use-package elixir-ts-mode
  :hook (elixir-ts-mode . eglot-ensure)
  (elixir-ts-mode
   .
@@ -1187,7 +1214,7 @@ This is a useful tool for building regulare expressions
     (push '("->" . ?\u2192) prettify-symbols-alist)
     (push '("<-" . ?\u2190) prettify-symbols-alist)
     (push '("|>" . ?\u25B7) prettify-symbols-alist)))
- (before-save . eglot-format))
+ (before-save . lsp-format-buffer))
 #+end_src
 
 * company
@@ -1292,3 +1319,20 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 
 
+
+* yas snippet
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :hook
+  (elixir-mode . yas-minor-mode)
+  :config
+  (yas-reload-all)
+  (define-key yas-minor-mode-map (kbd "C-k") 'yas-next-field)
+  (define-key yas-minor-mode-map (kbd "C-j") 'yas-prev-field))
+
+#+end_src 
+
+* TODO Vterm like async
+#+begin_src emacs-lisp
+#+end_src 
